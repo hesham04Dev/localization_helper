@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
-import 'package:localization_helper/controllers/localization.dart';
+import 'package:localization_helper/providers/localization.dart';
+import 'package:localization_helper/screens/home/widgets/localization_key_dialog.dart';
 import 'package:localization_helper/widgets/key_card.dart';
 import 'package:localization_lite/translate.dart';
 
@@ -18,13 +19,19 @@ const HomeBody({ super.key });
           title: Text(tr("home")),
           actions: [
             IconButton(icon: Icon(Icons.search),onPressed: (){},),
-            IconButton(icon: Icon(Icons.add),onPressed: (){},),
+            IconButton(icon: Icon(Icons.add),onPressed: (){
+              showDialog(context: context, builder: (context) => LocalizationKeyDialog());
+            },),
 
           ],
         ),
+// TODO show the key lang lang2 lang3 ... 
+
         Expanded(child: Padding(
           padding: kSpacing,
-          child: ListView.builder(itemBuilder: (context, index) {
+          child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(height: 5,),
+            itemBuilder: (context, index) {
+
             return KeyCard(localizationKey: keys[index] );
             
           },

@@ -9,6 +9,7 @@ class PrimaryContainer extends StatelessWidget {
   final bool withBorder;
   final double? paddingHorizontal;
   final double margin;
+  final double borderRadius;
   const PrimaryContainer({
     super.key,
     required this.child,
@@ -19,6 +20,7 @@ class PrimaryContainer extends StatelessWidget {
     this.paddingHorizontal,
     this.margin = 8,
     this.withBorder = false,
+    this.borderRadius = 45
   });
 
   @override
@@ -32,7 +34,7 @@ class PrimaryContainer extends StatelessWidget {
           vertical: padding, horizontal: paddingHorizontal ?? padding),
       margin: EdgeInsets.all(margin),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(45),
+          borderRadius: BorderRadius.circular(borderRadius),
           color: color.withOpacity(opacity),
           border: withBorder ? Border.all(color: color, width: 2) : null),
       child: child,

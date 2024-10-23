@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/app_theme.dart';
 import 'package:localization_helper/config/const.dart';
-import 'package:localization_helper/controllers/localization.dart';
+import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/screens/home/home.dart';
 import 'package:localization_lite/translate.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
          Builder(builder: (context) {
-          bool isDarkMode = false;
+          bool isDarkMode = !true;
           MaterialColor accentColor =  kAccentColor;
           return MaterialApp(
               title: 'Achievement Box',
@@ -32,3 +32,5 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//using 2d scrollable
+//
