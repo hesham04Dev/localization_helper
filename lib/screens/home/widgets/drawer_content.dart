@@ -9,7 +9,8 @@ import 'package:localization_helper/main.dart';
 import 'package:localization_helper/models/shortcut_button.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/models/click_detector.dart';
-import 'package:localization_helper/screens/home/widgets/localization_lang_dialog.dart';
+import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
+import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/PrimaryContainer.dart';
@@ -33,12 +34,11 @@ class DrawerContent extends StatelessWidget {
             const Expanded(child: SizedBox()),
             IconButton(icon: const Icon(Icons.folder),onPressed:(){} ,),
             IconButton(icon: const Icon(Icons.save),onPressed:(){} ,),
-            IconButton(icon: const Icon(Icons.add),onPressed:(){
-              showDialog(context: context, builder: (context) => const LocalizationLangDialog(),);
-            } ,),
-            ShortcutButton(icon: const Text("data"), logicalKeySet: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift, LogicalKeyboardKey.keyN), onClick: (){
-              showDialog(context: context, builder: (context) => const LocalizationLangDialog(),);
-            })
+            IconButton(icon: const Icon(Icons.add),onPressed:(){showLangDialog(context);} ,),
+            // ShortcutButton(icon: const Icon(Icons.add), logicalKeySet: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift, LogicalKeyboardKey.keyN), onClick: (){
+            //   showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("langCode"),
+            //     saveClick: (String input) { context.read<Localization>().addLang(input);  }, generateClick: (String input) {  },),);
+            // })
           ],),
 
          ...generateLangsTiles(context)
