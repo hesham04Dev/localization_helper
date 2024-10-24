@@ -3,6 +3,7 @@ import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/models/PrimaryContainer.dart';
 import 'package:localization_helper/models/click_detector.dart';
 import 'package:localization_lite/translate.dart';
+import 'package:provider/provider.dart';
 
 class KeyCard extends StatefulWidget {
   final String localizationKey;
@@ -15,6 +16,16 @@ late List<String> keyValues;
 
 class _KeyCardState extends State<KeyCard> {
   bool isOpen = false;
+  late List<String> langs;
+  late Localization localizationInstance;
+
+  @override
+  Widget build(BuildContext context) {
+    localizationInstance =context.read<Localization>();
+    keyValues = localizationInstance.getKeyValues(widget.localizationKey);
+    return isOpen? buildOpen(context): buildClosed(context) ;
+  }
+
   Widget buildClosed(context){
     return ClickDetector(
       onRightClick: (){
@@ -37,9 +48,9 @@ class _KeyCardState extends State<KeyCard> {
     );
   }
 
-  Widget buildOpen(context){
-    
-    List<String> langs = Localization.instance.langues();
+  Widget buildOpen(BuildContext context){
+     
+    langs = localizationInstance.langues();
     List controllers = List.generate(langs.length,(index) => TextEditingController(text:keyValues[index]),);  
     void disposeControllers(){
      for(var controller in controllers){
@@ -77,15 +88,14 @@ class _KeyCardState extends State<KeyCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [TextButton(onPressed: (){
-               List<String> langues = Localization.instance.langues();
+               
                 for(int i=0;i<controllers.length;i++){
-                  
-                Localization.instance.data[langues[i]]![widget.localizationKey]= controllers[i].text;}
+                localizationInstance.data[langs[i]]![widget.localizationKey]= controllers[i].text;}
                 isOpen=false;
                 setState(() {
                   
                 });
-                print(Localization.instance.data);
+                print(localizationInstance.data);
               }, child: Text(tr("save"))),
               FilledButton(onPressed: (){}, child: Text(tr("generate")))
               ],
@@ -96,11 +106,7 @@ class _KeyCardState extends State<KeyCard> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    keyValues = Localization.instance.getKeyValues(widget.localizationKey);
-    return isOpen? buildOpen(context): buildClosed(context) ;
-  }
+  
 }
 
 // import 'package:flutter/material.dart';

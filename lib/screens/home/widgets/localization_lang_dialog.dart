@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_lite/translate.dart';
+import 'package:provider/provider.dart';
 
 class LocalizationLangDialog extends StatelessWidget {
 const LocalizationLangDialog({ super.key });
@@ -8,7 +9,10 @@ const LocalizationLangDialog({ super.key });
   @override
   Widget build(BuildContext context){
     String LangCode ="";
-    var localizationKeyInput = SizedBox (width: 250, child:  TextField(onChanged: (value) => LangCode = value,decoration: const InputDecoration(hintText: "Lang code"),));
+    var localizationKeyInput = SizedBox (width: 250, child:  TextField(onChanged: (value) => LangCode = value, autofocus: true, onSubmitted: (val){
+      context.read<Localization>().addLang(LangCode);
+            Navigator.pop(context);
+    }, decoration:  const InputDecoration(hintText: "Lang code"),));
    
     return Dialog(
 
@@ -18,7 +22,7 @@ const LocalizationLangDialog({ super.key });
           mainAxisSize: MainAxisSize.min,
           children: [
             localizationKeyInput,
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [TextButton(onPressed: (){
@@ -36,7 +40,7 @@ const LocalizationLangDialog({ super.key });
 
             
         
-            print(Localization.instance.data);
+            context.read<Localization>().addLang(LangCode);
             Navigator.pop(context);
             }, child: Text(tr("save")))
             ,FilledButton(onPressed: (){}, child: Text(tr("generate")))],)

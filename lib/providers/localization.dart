@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Localization with ChangeNotifier {
-  static late Localization instance ;
+  
 
   //data shape like  {en:{key:value,},}
   Map<String,Map<String,String>> data ={};
-  static void init(){
-    instance = Localization._();
-    instance.data = {"en": {"key": "value","key2":"val"},"ar":{"key":"value"}};//TODO use the same way as the extension
-  }
   
-  Localization._();
+  Localization(){
+    data = {"en": {"key": "value","key2":"val"},"ar":{"key":"value"}};//TODO use the same way as the extension
+  }
   langues(){
     return data.keys.toList(growable: false);
   }
@@ -25,18 +23,18 @@ class Localization with ChangeNotifier {
     return values;
   }
   addKey(String key){
-    instance.data.forEach((dataKey, value) {
+    data.forEach((dataKey, value) {
                 value.addAll({key:""});
               },);
     notifyListeners();
   }
   addLang(String langCode){
-      var keys =instance.keys();
+      var keys = this.keys();
                 Map<String,String> newLangData = {};
               for(var key in keys ){
                 newLangData.addAll({key:""});
               }
-              Localization.instance.data.addAll({langCode:newLangData});
+              data.addAll({langCode:newLangData});
     notifyListeners();
   }
 

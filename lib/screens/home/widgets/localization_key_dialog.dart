@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:localization_helper/main.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_lite/translate.dart';
+import 'package:provider/provider.dart';
 
 class LocalizationKeyDialog extends StatelessWidget {
 const LocalizationKeyDialog({ super.key });
@@ -8,7 +10,7 @@ const LocalizationKeyDialog({ super.key });
   @override
   Widget build(BuildContext context){
     String key ="";
-    var localizationKeyInput = SizedBox (width: 250, child:  TextField(onChanged: (value) => key = value,decoration: const InputDecoration(hintText: "Key"),));
+    var localizationKeyInput = SizedBox (width: 250, child:  TextField(onChanged: (value) => key = value, autofocus: true, decoration: const InputDecoration(hintText: "Key"),));
    
     return Dialog(
 
@@ -30,7 +32,7 @@ const LocalizationKeyDialog({ super.key });
             // //TODO auto add from ai in the langs
             // // or add the default langs
         
-            print(Localization.instance.data);
+            context.read<Localization>().addKey(key);
             Navigator.pop(context);
             }, child: Text(tr("save")))
             ,FilledButton(onPressed: (){}, child: Text(tr("generate")))],)

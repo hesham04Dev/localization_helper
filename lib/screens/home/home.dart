@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
           //   title: Text(tr("app_name")),
           // ),
           drawer: isLargeScreen ? null : const Drawer(
-            child: DrawerContent(),
+            child:  DrawerContent(),
           ),
           body: Row(
             children: [
