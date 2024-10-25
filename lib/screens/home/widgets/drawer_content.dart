@@ -5,8 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization_helper/config/const.dart';
+import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/main.dart';
-import 'package:localization_helper/models/shortcut_button.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/models/click_detector.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
@@ -33,7 +33,9 @@ class DrawerContent extends StatelessWidget {
             IconButton(icon: const Icon(Icons.settings),onPressed:(){} ,),
             const Expanded(child: SizedBox()),
             IconButton(icon: const Icon(Icons.folder),onPressed:(){} ,),
-            IconButton(icon: const Icon(Icons.save),onPressed:(){} ,),
+            IconButton(icon: const Icon(Icons.save),onPressed:(){
+              saveData(context);
+            } ,),
             IconButton(icon: const Icon(Icons.add),onPressed:(){showLangDialog(context);} ,),
             // ShortcutButton(icon: const Icon(Icons.add), logicalKeySet: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift, LogicalKeyboardKey.keyN), onClick: (){
             //   showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("langCode"),
@@ -49,7 +51,7 @@ class DrawerContent extends StatelessWidget {
   }
   List<Widget> generateLangsTiles(BuildContext context){
     List<Widget> langTiles =[];
-    for(var langCode in context.watch<Localization>().langues() ){
+    for(var langCode in context.watch<Localization>().languages() ){
 
       langTiles.add( ClickDetector(
         onRightClick: (){
@@ -68,7 +70,7 @@ class DrawerContent extends StatelessWidget {
             ),
       ),);
     }
-    return langTiles;
+    return langTiles??[];
   }
 
 }

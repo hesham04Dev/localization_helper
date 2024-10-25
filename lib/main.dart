@@ -10,7 +10,9 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   await Translate.init(defaultLangCode: "ar");
+  
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => Localization()),

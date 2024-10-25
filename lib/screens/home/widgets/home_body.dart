@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization_helper/config/const.dart';
-import 'package:localization_helper/models/shortcut_button.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
 import 'package:localization_helper/widgets/key_card.dart';

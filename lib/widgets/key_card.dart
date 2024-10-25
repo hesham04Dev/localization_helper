@@ -50,7 +50,7 @@ class _KeyCardState extends State<KeyCard> {
 
   Widget buildOpen(BuildContext context){
      
-    langs = localizationInstance.langues();
+    langs = localizationInstance.languages();
     List controllers = List.generate(langs.length,(index) => TextEditingController(text:keyValues[index]),);  
     void disposeControllers(){
      for(var controller in controllers){
@@ -187,7 +187,7 @@ class _KeyCardState extends State<KeyCard> {
 //   }
 
 //   Widget buildOpen(BuildContext context) {
-//     List<String> langs = Localization.instance.langues();
+//     List<String> langs = Localization.instance.languages();
 
 //     return PrimaryContainer(
 //       padding: 20,
@@ -217,9 +217,9 @@ class _KeyCardState extends State<KeyCard> {
 //             children: [
 //               TextButton(
 //                 onPressed: () {
-//                   List<String> langues = Localization.instance.langues();
+//                   List<String> languages = Localization.instance.languages();
 //                   for (int i = 0; i < controllers.length; i++) {
-//                     Localization.instance.data[langues[i]]![widget.localizationKey] =
+//                     Localization.instance.data[languages[i]]![widget.localizationKey] =
 //                         controllers[i].text;
 //                   }
 //                   close();
@@ -248,3 +248,5 @@ class _KeyCardState extends State<KeyCard> {
 // }
 
 //animated version have some err the data does not appear on close 
+
+//make the first input autofocus and in all input add on submit to save or generate
