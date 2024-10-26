@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/app_theme.dart';
 import 'package:localization_helper/config/const.dart';
+import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/screens/home/home.dart';
 import 'package:localization_lite/translate.dart';
@@ -16,6 +17,8 @@ void main() async {
   // await GeminiService().getKeyValues({"key":"home","en":"","ar":"","hi":""});
   // await GeminiService().getLangValues({"en":{"home":"Home","menu":"Menu","status":"Status","hi":"Hi"},"ar":{"home":"","menu":"","status":"","hi":""}});
   await Translate.init(defaultLangCode: "ar");
+  await Shared.init();
+  GeminiService.init();
   
   runApp(MultiProvider(
     providers: [
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
          Builder(builder: (context) {
-          bool isDarkMode = !true;
+          bool isDarkMode = Shared.prefs.getBool("isDarkMode")??false;
           MaterialColor accentColor =  kAccentColor;
           return MaterialApp(
               title: 'Achievement Box',
@@ -53,9 +56,10 @@ class MyApp extends StatelessWidget {
 // ctrl o to open done
 // ctrl i to settings done
 // ctrl q to search done 
+// todo why shortcuts stops sometimes 
 // ADD title in home body
 // onclick on a lang show onlys the values of it
-// add ai 
+// add ai btn to fill all its keys
 // make search works
 // works on the settings 
 // save the data in the settings 
@@ -70,4 +74,9 @@ class MyApp extends StatelessWidget {
 // we need to have a lang before adding keys
 // no generate if thers is no lang
 //maybe add a default lang in the settings !important
+// if no api key then in the generate btn show alert add api key to enable this feature
+//handle the ai err and show alert with the err message and remove the added data
+//add Darkmode provider
+
+
 

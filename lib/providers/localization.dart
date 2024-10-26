@@ -1,50 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class Localization with ChangeNotifier {
-  
-
-//   //data shape like  {en:{key:value,},}
-//   Map<String,Map<String,String>> data ={};
-  
-//   Localization(){
-//     data = {"en": {"key": "value","key2":"val"},"ar":{"key":"value"}};//TODO use the same way as the extension
-//   }
-//   languages(){
-//     return data.keys.toList(growable: false);
-//   }
-//   keys(){
-//     return data[languages()[0]]?.keys.toList(growable: false);
-//   }
-//   getKeyValues(key){
-//    List<String> values = [];
-//     for(String lang in languages()){
-//       values.add( data[lang]?[key]??"");
-//     }
-//     return values;
-//   }
-//   addKey(String key){
-//     data.forEach((dataKey, value) {
-//                 value.addAll({key:""});
-//               },);
-//     notifyListeners();
-//   }
-//   addLang(String langCode){
-//       var keys = this.keys();
-//                 Map<String,String> newLangData = {};
-//               for(var key in keys ){
-//                 newLangData.addAll({key:""});
-//               }
-//               data.addAll({langCode:newLangData});
-//     notifyListeners();
-//   }
-
-
-//   //TODO to json 
-//   //TODO from json
-
-
-// }
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -53,27 +6,23 @@ import 'dart:io';
 import 'package:localization_helper/ai_services/gemini.dart';
 
 class Localization with ChangeNotifier {
-  // Data shape like {en: {key: value,},}
   Map<String, Map<String, String>> data = {};
   String? path;
   Localization() {
-    // Initialize with some default values
-    data = {
-      "en": {"key": "value", "key2": "val"},
-      "ar": {"key": "value"}
-    };
-    data = {};
+    String defaultLang = "en";
+    //todo if default lang is not in an opened project then add it with the keys of the biggest length of the json that has been read
+    data = {defaultLang:{}};
   }
 
-  // Get available languages
+
   List<String> languages() {
     if(data.isEmpty) return [];
     return data.keys.toList(growable: false);
   }
 
-  // Get keys for the default language
   List<String> keys() {
     if (data.isEmpty) return [];
+    //
     return data[languages()[0]]?.keys.toList(growable: false) ??[];
   }
 
@@ -100,37 +49,31 @@ class Localization with ChangeNotifier {
     for(var lang in langs){
       param[lang] = data[lang]?[key]??"";
     }
-
     Map<String,String> result = {};
-    // result.addAll(jsonDecode(await GeminiService().getLangValues(param)));
     var decoded = jsonDecode(await GeminiService().getKeyValues(param));
      decoded.forEach((key, value) {
     result[key] = value;
   });
-    // result.addAll( );
       for(var lang in  result.keys){
         data[lang]?[key] = result[lang]??"";
       }
     print(data);
-  //    Map<String, Map<String, String>> result = {};
-
-  // // Corrected JSON string with double quotes
-  //  final decoded = jsonDecode('{"en": {"home": "Home"}, "ar": {"home": "Home"}}') as Map<String, dynamic>;
-
-  // // Convert each value to the expected type and add to result
-  // decoded.forEach((key, value) {
-  //   result[key] = Map<String, String>.from(value);
-  // });
-  // Map<String, Map<String, String>> data = {};
-  
-  // data[langCode] = result[langCode] ?? {};
-  // print(data);
-
-
     notifyListeners();
   }
 
-
+  void generateCardValues(Map<String, String> param) async{
+    String key = param["key"]!;
+        Map<String,String> result = {};
+    var decoded = jsonDecode(await GeminiService().getKeyValues(param));
+     decoded.forEach((key, value) {
+    result[key] = value;
+  });
+      for(var lang in  result.keys){
+        data[lang]?[key] = result[lang]??"";
+      }
+    print(data);
+    notifyListeners();
+  }
   // Add a new language with keys initialized to empty values
   void addLang(String langCode,{notify=true}) {
     var keysList = keys();

@@ -6,6 +6,7 @@ const kWhite = Colors.white;
 const kAccentColor = Colors.green;
 const kFont = "Dubai";
 const kSpacing = EdgeInsets.all(8);
+const kDefaultLang = "en";
 
 //const for this project
 const double kDrawerWidth = 250;

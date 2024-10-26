@@ -10,6 +10,7 @@ import 'package:localization_helper/main.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/models/click_detector.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
+import 'package:localization_helper/screens/settings/settings.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
@@ -30,10 +31,12 @@ class DrawerContent extends StatelessWidget {
           Row(
            
             children: [
-            IconButton(icon: const Icon(Icons.settings),onPressed:(){} ,),
+            IconButton(icon: const Icon(Icons.settings),onPressed:(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings(),));
+            } ,),
             const Expanded(child: SizedBox()),
             IconButton(icon: const Icon(Icons.folder),onPressed:(){
-              
+              openFolder(context);
             } ,),
             IconButton(icon: const Icon(Icons.save),onPressed:(){
               saveData(context);

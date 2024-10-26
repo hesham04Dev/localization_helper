@@ -16,6 +16,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
       iconColor: accentColor,
       selectedTileColor: accentColor.shade100,
           ),
+     
     tabBarTheme: const TabBarTheme(dividerColor: Colors.transparent),
     dropdownMenuTheme: DropdownMenuThemeData(
         menuStyle: MenuStyle(
@@ -43,10 +44,21 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
         selectedItemColor: swatch.primary,
         selectedLabelStyle: TextStyle(color: swatch.primary)),
     switchTheme: SwitchThemeData(
-      trackOutlineColor:
-          WidgetStatePropertyAll(swatch.primary.withOpacity(0.2)),
-      thumbColor: WidgetStatePropertyAll(swatch.primary.withOpacity(0.2)),
-    ),
+  trackOutlineColor: WidgetStateProperty.all(
+      swatch.primary.withOpacity(0.2)),
+  thumbColor: WidgetStateProperty.resolveWith((states) {
+    if (states.contains(WidgetState.selected)) {
+      return swatch.primary; // Color when switch is ON
+    }
+    return accentColor.shade100; // Color when switch is OFF
+  }),
+  trackColor: WidgetStateProperty.resolveWith((states) {
+    if (states.contains(WidgetState.selected)) {
+      return swatch.primary; // Color when switch is ON
+    }
+    return isDark ? kDarkGrey: kWhite; // Color when switch is OFF
+  }),
+),
     dialogTheme:
         DialogTheme(backgroundColor: isDark ? Colors.black : Colors.white),
     iconButtonTheme: IconButtonThemeData(
@@ -55,7 +67,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
       swatch.primary,
     ))),
     inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: isDark ? Colors.white : Colors.black)),
+        hintStyle: TextStyle(color: isDark ? Colors.white : Colors.black,fontWeight: FontWeight.normal )),
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
             textStyle: WidgetStatePropertyAll(TextStyle(

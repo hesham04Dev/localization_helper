@@ -95,9 +95,15 @@ class _KeyCardState extends State<KeyCard> {
                 setState(() {
                   
                 });
-                print(localizationInstance.data);
+                // print(localizationInstance.data);
               }, child: Text(tr("save"))),
-              FilledButton(onPressed: (){}, child: Text(tr("generate")))
+              FilledButton(onPressed: (){
+                  var param = {"key": widget.localizationKey};
+                  for(int i=0;i<controllers.length;i++){
+                    param[langs[i]] = controllers[i].text;
+                  }
+                  localizationInstance.generateCardValues(param);
+              }, child: Text(tr("generate")))
               ],
             ),
           )
