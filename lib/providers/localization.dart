@@ -50,6 +50,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:localization_helper/ai_services/gemini.dart';
+
 class Localization with ChangeNotifier {
   // Data shape like {en: {key: value,},}
   Map<String, Map<String, String>> data = {};
@@ -85,15 +87,52 @@ class Localization with ChangeNotifier {
   }
 
   // Add a new key to all languages
-  void addKey(String key) {
+  void addKey(String key,{notify=true}) {
     data.forEach((dataKey, value) {
       value[key] = ""; // Add the key with an empty value
     });
+    if(notify)notifyListeners();
+  }
+  void generateKeyValues(String key)async {
+    addKey(key,notify:false);
+    Map<String,String> param = {"key":key,};
+    var langs = languages();
+    for(var lang in langs){
+      param[lang] = data[lang]?[key]??"";
+    }
+
+    Map<String,String> result = {};
+    // result.addAll(jsonDecode(await GeminiService().getLangValues(param)));
+    var decoded = jsonDecode(await GeminiService().getKeyValues(param));
+     decoded.forEach((key, value) {
+    result[key] = value;
+  });
+    // result.addAll( );
+      for(var lang in  result.keys){
+        data[lang]?[key] = result[lang]??"";
+      }
+    print(data);
+  //    Map<String, Map<String, String>> result = {};
+
+  // // Corrected JSON string with double quotes
+  //  final decoded = jsonDecode('{"en": {"home": "Home"}, "ar": {"home": "Home"}}') as Map<String, dynamic>;
+
+  // // Convert each value to the expected type and add to result
+  // decoded.forEach((key, value) {
+  //   result[key] = Map<String, String>.from(value);
+  // });
+  // Map<String, Map<String, String>> data = {};
+  
+  // data[langCode] = result[langCode] ?? {};
+  // print(data);
+
+
     notifyListeners();
   }
 
+
   // Add a new language with keys initialized to empty values
-  void addLang(String langCode) {
+  void addLang(String langCode,{notify=true}) {
     var keysList = keys();
     Map<String, String> newLangData = {};
     if (keysList != null) {
@@ -102,6 +141,38 @@ class Localization with ChangeNotifier {
       }
     }
     data[langCode] = newLangData; // Add new language to data
+    if(notify){  notifyListeners();}
+  }
+  void generateLangValues(String langCode)async {
+    addLang(langCode,notify:false);
+    Map<String,Map<String,String>> param = {};
+    param.addAll({"en":data["en"]!});
+    param.addAll({langCode:data[langCode]!});
+
+    Map<String,Map<String,String>> result = {};
+    // result.addAll(jsonDecode(await GeminiService().getLangValues(param)));
+    var decoded = jsonDecode(await GeminiService().getLangValues(param));
+    decoded.forEach((key, value) {
+    result[key] = Map<String, String>.from(value);
+  });
+
+    data[langCode] = result[langCode]??{};
+    print(data);
+  //    Map<String, Map<String, String>> result = {};
+
+  // // Corrected JSON string with double quotes
+  //  final decoded = jsonDecode('{"en": {"home": "Home"}, "ar": {"home": "Home"}}') as Map<String, dynamic>;
+
+  // // Convert each value to the expected type and add to result
+  // decoded.forEach((key, value) {
+  //   result[key] = Map<String, String>.from(value);
+  // });
+  // Map<String, Map<String, String>> data = {};
+  
+  // data[langCode] = result[langCode] ?? {};
+  // print(data);
+
+
     notifyListeners();
   }
 

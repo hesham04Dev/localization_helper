@@ -1,6 +1,9 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/app_theme.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/providers/localization.dart';
@@ -10,7 +13,8 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+  // await GeminiService().getKeyValues({"key":"home","en":"","ar":"","hi":""});
+  // await GeminiService().getLangValues({"en":{"home":"Home","menu":"Menu","status":"Status","hi":"Hi"},"ar":{"home":"","menu":"","status":"","hi":""}});
   await Translate.init(defaultLangCode: "ar");
   
   runApp(MultiProvider(
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
          Builder(builder: (context) {
-          bool isDarkMode = !!true;
+          bool isDarkMode = !true;
           MaterialColor accentColor =  kAccentColor;
           return MaterialApp(
               title: 'Achievement Box',
@@ -41,12 +45,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//using 2d scrollable
-//add shortcuts
-//ctr n to new key 
-// ctrl shift n to new lang
-// ctrl s to save 
-// ctrl o to open
-// ctrl i to settings
-// ctrl q to search
-// use something rather than list tile in drawer
+//using 2d scrollablev TODO 
+//add shortcuts done
+//ctr n to new key done
+// ctrl shift n to new lang done
+// ctrl s to save done
+// ctrl o to open done
+// ctrl i to settings done
+// ctrl q to search done 
+// ADD title in home body
+// onclick on a lang show onlys the values of it
+// add ai 
+// make search works
+// works on the settings 
+// save the data in the settings 
+// add on deafult on lang dialog 
+// add default on Key dialog
+// add default on key_Card
+// add dark mode in settings
+// add btn on lang to regenerate 
+// on right click on lang or card show update name or delete
+// show something on empty
+// change the app color to a olive or somthing like 
+// we need to have a lang before adding keys
+// no generate if thers is no lang
+//maybe add a default lang in the settings !important
+

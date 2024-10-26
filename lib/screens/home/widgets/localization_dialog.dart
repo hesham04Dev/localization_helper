@@ -60,9 +60,13 @@ import '../../../providers/localization.dart';
 
 showLangDialog(context){
   showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("langCode"),
-                saveClick: (String input) { context.read<Localization>().addLang(input);  }, generateClick: (String input) {  },),);
+                saveClick: (String input) { context.read<Localization>().addLang(input);  }, generateClick: (String input) { 
+                  context.read<Localization>().generateLangValues(input);
+                 },),);
 }
 showKeyDialog(context){
   showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("key"),
-                saveClick: (String input) { context.read<Localization>().addKey(input);  }, generateClick: (String input) {  },),);
+                saveClick: (String input) { context.read<Localization>().addKey(input);  }, generateClick: (String input) { 
+                  context.read<Localization>().generateKeyValues(input);
+                 },),);
 }

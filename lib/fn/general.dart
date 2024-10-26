@@ -8,5 +8,5 @@ saveData(BuildContext context){
 }
 openFolder(BuildContext context) async{
      context.read<Localization>().path = await FilePicker.platform.getDirectoryPath();
-   context.read<Localization>().toJson();
+   context.read<Localization>().fromJson();
 }
