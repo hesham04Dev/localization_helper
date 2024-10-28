@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 class KeyCard extends StatefulWidget {
   final String localizationKey;
+
   const KeyCard({ super.key, required this.localizationKey });
 
   @override
@@ -41,7 +42,8 @@ class _KeyCardState extends State<KeyCard> {
         
         margin: 0,
         paddingHorizontal: 10,
-        child: Row(children: [Expanded(child:Text(widget.localizationKey)), ...List.generate(keyValues.length, (index) =>Expanded(
+        child: Row(mainAxisSize: MainAxisSize.min,
+          children: [SizedBox(width: 100, child:Text(widget.localizationKey)), ...List.generate(keyValues.length, (index) =>SizedBox(width: 100,
           child: Text(keyValues[index]),
         ) )],),
       ),

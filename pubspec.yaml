@@ -40,6 +40,7 @@ dependencies:
   localization_lite: ^1.0.7
   provider: ^6.1.2
   shared_preferences: ^2.3.2
+  two_dimensional_scrollables: ^0.3.3
 
 
 dev_dependencies:

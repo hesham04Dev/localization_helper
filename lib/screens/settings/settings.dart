@@ -3,7 +3,9 @@ import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_helper/models/PrimaryContainer.dart';
+import 'package:localization_helper/providers/theme_provider.dart';
 import 'package:localization_lite/translate.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -17,6 +19,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    var themeInstance = context.read<ThemeProvider>();
     var apiKeyController = TextEditingController();
     var defaultLangController = TextEditingController();
     bool autoGenerateOnKey = Shared.prefs.getBool("autoGenerateOnKey")?? false;
@@ -24,7 +27,7 @@ class _SettingsState extends State<Settings> {
     bool autoGenerateOnCard = Shared.prefs.getBool("autoGenerateOnCard")?? false;
     bool generateMap = Shared.prefs.getBool("generateMap")?? false;
     bool generateConstKeys = Shared.prefs.getBool("generateConstKeys")?? false;
-    bool isDarkMode = Shared.prefs.getBool("isDarkMode")?? false;
+    bool isDarkMode = themeInstance.darkMode;
     saveApiKey() async {
       await Shared.prefs.setString("apiKey", apiKeyController.text);
       //TODO show info saved
@@ -111,7 +114,7 @@ class _SettingsState extends State<Settings> {
             ),
             generateSwitchList(
               onChanged: (value) async{
-                await Shared.prefs.setBool("isDarkMode", value);
+                themeInstance.toggleMode();
                 setState((){});
               },
               title: Text(tr("darkMode")),

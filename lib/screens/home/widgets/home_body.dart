@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/models/PrimaryContainer.dart';
@@ -13,6 +14,8 @@ class HomeBody extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    var scroll = ScrollController();
+    
     MediaQuery.sizeOf(context).width; //this to update the screen when size changes
     var keys = context.watch<Localization>().keys();
     var languages = context.watch<Localization>().languages();
@@ -34,12 +37,12 @@ class HomeBody extends StatelessWidget {
             ),
           ],
         ),
-// TODO show the key lang lang2 lang3 ...
+        
         PrimaryContainer(
-          paddingHorizontal: 16,
+          paddingHorizontal: 20,
           borderRadius: 0,
           margin: 0,
-          child: Row(children: [Expanded(child: Text(tr("key")),),...List.generate(languages.length, (index) => Expanded(child: Text(languages[index],)),)],),
+          child:  Row(children:[SizedBox(width: 100, child:  Text(tr("key"))),...List.generate(languages.length, (index) => SizedBox( width: 100, child:Text(languages[index],)),)]),
         ),
         Expanded(
             child: Padding(
@@ -53,7 +56,8 @@ class HomeBody extends StatelessWidget {
             },
             itemCount: keys.length,
           ),
-        ))
+        )),
+        
       ],
     );
   }
