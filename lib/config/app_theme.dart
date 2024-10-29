@@ -59,6 +59,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
     return isDark ? kDarkGrey: kWhite; // Color when switch is OFF
   }),
 ),
+dividerColor: accentColor,
     dialogTheme:
         DialogTheme(backgroundColor: isDark ? Colors.black : Colors.white),
     iconButtonTheme: IconButtonThemeData(

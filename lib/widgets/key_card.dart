@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/providers/localization.dart';
-import 'package:localization_helper/models/PrimaryContainer.dart';
 import 'package:localization_helper/models/click_detector.dart';
-import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
 class KeyCard extends StatefulWidget {
@@ -24,95 +23,122 @@ class _KeyCardState extends State<KeyCard> {
   Widget build(BuildContext context) {
     localizationInstance =context.read<Localization>();
     keyValues = localizationInstance.getKeyValues(widget.localizationKey);
-    return isOpen? buildOpen(context): buildClosed(context) ;
-  }
-
-  Widget buildClosed(context){
-    return ClickDetector(
-      onRightClick: (){
-        //TODO as long press
-      },
-      onLeftClick: (){
-        isOpen = true;
-        setState(() {
-          
-        });
-      },
-      child: PrimaryContainer(
-        
-        margin: 0,
-        paddingHorizontal: 10,
-        child: Row(mainAxisSize: MainAxisSize.min,
-          children: [SizedBox(width: 100, child:Text(widget.localizationKey)), ...List.generate(keyValues.length, (index) =>SizedBox(width: 100,
-          child: Text(keyValues[index]),
-        ) )],),
-      ),
-    );
-  }
-
-  Widget buildOpen(BuildContext context){
-     
-    langs = localizationInstance.languages();
-    List controllers = List.generate(langs.length,(index) => TextEditingController(text:keyValues[index]),);  
-    void disposeControllers(){
-     for(var controller in controllers){
-      controller.dispose();
-     }
-     controllers.clear();
-    }
-      return PrimaryContainer(
-      padding: 20,
-      margin: 0,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text(widget.localizationKey),IconButton(onPressed: (){
-              isOpen =false;
-              disposeControllers();
-              setState(() {
-                
-              });
-            }, icon: const Icon(Icons.close))],
-          ),
-          Wrap(
-            children: List.generate(keyValues.length, (index) =>  TextField(
-              controller: controllers[index],
-              decoration: InputDecoration(
-                //todo for the contorller
-                
-                hintText: langs[index]
-              ),
-            ),),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [TextButton(onPressed: (){
-               
-                for(int i=0;i<controllers.length;i++){
-                localizationInstance.data[langs[i]]![widget.localizationKey]= controllers[i].text;}
-                isOpen=false;
-                setState(() {
-                  
-                });
-                // print(localizationInstance.data);
-              }, child: Text(tr("save"))),
-              FilledButton(onPressed: (){
-                  var param = {"key": widget.localizationKey};
-                  for(int i=0;i<controllers.length;i++){
-                    param[langs[i]] = controllers[i].text;
-                  }
-                  localizationInstance.generateCardValues(param);
-              }, child: Text(tr("generate")))
-              ],
+     return Column(
+      mainAxisSize: MainAxisSize.min,
+       children: [
+         ClickDetector(
+          onRightClick: (){
+            //TODO as long press
+          },
+          onLeftClick: (){
+            isOpen = true;
+            setState(() {
+              //TODO nav to new page await and get the data then setstate this widget 
+            });
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: kAccentColor.withOpacity(0.2)))
             ),
-          )
-        ],
-      ),
-    );
+            child: Row(mainAxisSize: MainAxisSize.min,
+              children: [SizedBox(width: 100, child:Text(widget.localizationKey)), ...List.generate(keyValues.length, (index) =>SizedBox(width: 100,
+              child: Text(keyValues[index]),
+            ) )],),
+          ),
+             ),
+          
+       ],
+     );
+  
   }
+
+  // Widget buildClosed(context){
+  //   return ClickDetector(
+  //     onRightClick: (){
+  //       //TODO as long press
+  //     },
+  //     onLeftClick: (){
+  //       isOpen = true;
+  //       setState(() {
+          
+  //       });
+  //     },
+  //     child: PrimaryContainer(
+        
+  //       margin: 0,
+  //       paddingHorizontal: 10,
+  //       child: Row(mainAxisSize: MainAxisSize.min,
+  //         children: [SizedBox(width: 100, child:Text(widget.localizationKey)), ...List.generate(keyValues.length, (index) =>SizedBox(width: 100,
+  //         child: Text(keyValues[index]),
+  //       ) )],),
+  //     ),
+  //   );
+  // }
+
+  // Widget buildOpen(BuildContext context){
+     
+  //   langs = localizationInstance.languages();
+  //   List controllers = List.generate(langs.length,(index) => TextEditingController(text:keyValues[index]),);  
+  //   void disposeControllers(){
+  //    for(var controller in controllers){
+  //     controller.dispose();
+  //    }
+  //    controllers.clear();
+  //   }
+  //     return PrimaryContainer(
+  //     padding: 20,
+  //     margin: 0,
+  //     child: Column(
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [Text(widget.localizationKey),IconButton(onPressed: (){
+  //             isOpen =false;
+  //             disposeControllers();
+  //             setState(() {
+                
+  //             });
+  //           }, icon: const Icon(Icons.close))],
+  //         ),
+  //         Wrap(
+  //           children: List.generate(keyValues.length, (index) =>  TextField(
+  //             controller: controllers[index],
+  //             decoration: InputDecoration(
+  //               //todo for the contorller
+                
+  //               hintText: langs[index]
+  //             ),
+  //           ),),
+  //         ),
+  //         Padding(
+  //           padding: const EdgeInsets.only(top: 8.0),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [TextButton(onPressed: (){
+               
+  //               for(int i=0;i<controllers.length;i++){
+  //               localizationInstance.data[langs[i]]![widget.localizationKey]= controllers[i].text;}
+  //               isOpen=false;
+  //               setState(() {
+                  
+  //               });
+  //               // print(localizationInstance.data);
+  //             }, child: Text(tr("save"))),
+  //             FilledButton(onPressed: (){
+  //                 var param = {"key": widget.localizationKey};
+  //                 for(int i=0;i<controllers.length;i++){
+  //                   param[langs[i]] = controllers[i].text;
+  //                 }
+  //                 localizationInstance.generateCardValues(param);
+  //             }, child: Text(tr("generate")))
+  //             ],
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/models/PrimaryContainer.dart';
 import 'package:localization_helper/providers/localization.dart';
@@ -15,8 +13,9 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var scroll = ScrollController();
-    
-    MediaQuery.sizeOf(context).width; //this to update the screen when size changes
+    var horizontalController = ScrollController();
+    var verticalController = ScrollController();
+    var mediaQuery = MediaQuery.sizeOf(context); //this to update the screen when size changes
     var keys = context.watch<Localization>().keys();
     var languages = context.watch<Localization>().languages();
     return Column(
@@ -37,28 +36,47 @@ class HomeBody extends StatelessWidget {
             ),
           ],
         ),
-        
-        PrimaryContainer(
-          paddingHorizontal: 20,
-          borderRadius: 0,
-          margin: 0,
-          child:  Row(children:[SizedBox(width: 100, child:  Text(tr("key"))),...List.generate(languages.length, (index) => SizedBox( width: 100, child:Text(languages[index],)),)]),
-        ),
-        Expanded(
-            child: Padding(
-          padding: kSpacing,
-          child: ListView.separated(
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 5,
+
+        Scrollbar(
+          thumbVisibility: true,
+          controller: horizontalController ,
+          child: SingleChildScrollView(
+            controller: horizontalController ,
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+              PrimaryContainer(
+              paddingHorizontal: 20,
+              borderRadius: 0,
+              margin: 0,
+              child:  Row(children:[SizedBox(width: 100, child:  Text(tr("key"))),...List.generate(languages.length, (index) => SizedBox( width: 100, child:Text(languages[index],)),)]),
             ),
-            itemBuilder: (context, index) {
-              return KeyCard(localizationKey: keys[index]);
-            },
-            itemCount: keys.length,
+            SizedBox(
+              height: mediaQuery.height -95,
+                child: Scrollbar(
+                  controller: verticalController,
+                  thumbVisibility: true,
+                  scrollbarOrientation: ScrollbarOrientation.left,
+                  child: SingleChildScrollView(
+                    
+                    controller: verticalController,
+                    child: Column(
+                      children: List.generate(keys.length,(index) {
+                      return KeyCard(localizationKey: keys[index]);
+                    }, )
+                       
+                    ),
+                    
+                  ),
+                )),
+            ],),
           ),
-        )),
+        ),
+        
         
       ],
     );
   }
 }
+

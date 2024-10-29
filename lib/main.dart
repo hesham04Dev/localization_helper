@@ -10,6 +10,7 @@ import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/providers/theme_provider.dart';
 import 'package:localization_helper/screens/home/home.dart';
+import 'package:localization_helper/widgets/scrolling.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           bool isDarkMode = context.watch<ThemeProvider>().darkMode;
           MaterialColor accentColor =  kAccentColor;
           return MaterialApp(
+              scrollBehavior: MyCustomScrollBehavior(),
               title: 'Achievement Box',
               themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
               debugShowCheckedModeBanner: false,
