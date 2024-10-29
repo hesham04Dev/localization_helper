@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:localization_helper/config/const.dart';
+import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/models/PrimaryContainer.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
@@ -12,7 +12,6 @@ class HomeBody extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    var scroll = ScrollController();
     var horizontalController = ScrollController();
     var verticalController = ScrollController();
     var mediaQuery = MediaQuery.sizeOf(context); //this to update the screen when size changes
@@ -44,6 +43,7 @@ class HomeBody extends StatelessWidget {
             controller: horizontalController ,
             scrollDirection: Axis.horizontal,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
               PrimaryContainer(
@@ -63,7 +63,7 @@ class HomeBody extends StatelessWidget {
                     controller: verticalController,
                     child: Column(
                       children: List.generate(keys.length,(index) {
-                      return KeyCard(localizationKey: keys[index]);
+                      return KeyCard(localizationKey: keys[reverseIndex(listLength: keys.length, index: index)]);
                     }, )
                        
                     ),

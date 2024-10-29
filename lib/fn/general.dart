@@ -10,3 +10,18 @@ openFolder(BuildContext context) async{
      context.read<Localization>().path = await FilePicker.platform.getDirectoryPath();
    context.read<Localization>().fromJson();
 }
+Future goToWithReplacement(BuildContext context,WidgetBuilder builder) async{
+  return await Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: builder),
+  );
+}
+Future goTo(BuildContext context,WidgetBuilder builder) async{
+  return await Navigator.push(
+    context,
+    MaterialPageRoute(builder: builder),
+  );
+}
+int reverseIndex({required int listLength, required int  index}){
+  return listLength - index -1;
+}

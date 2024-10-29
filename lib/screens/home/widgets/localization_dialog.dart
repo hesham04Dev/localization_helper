@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:localization_helper/screens/home/intents/intents.dart';
+import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/localization.dart';
 
- class LocalizationDialog extends StatelessWidget {
+class LocalizationDialog extends StatelessWidget {
   final Function(String input) saveClick;
   final Function(String input) generateClick;
   final String hintText;
-  const LocalizationDialog({super.key, required this.hintText, required this.saveClick, required this.generateClick} );
+  final bool isAutoGenerate;
+  const LocalizationDialog(
+      {super.key,
+      required this.hintText,
+      required this.saveClick,
+      required this.generateClick,
+      this.isAutoGenerate = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +33,10 @@ import '../../../providers/localization.dart';
                   onChanged: (value) => input = value,
                   autofocus: true,
                   onSubmitted: (val) {
-                    //TODO if auto generate on enter then generate(input) add this to the settings
-                     saveClick(input);
+                    isAutoGenerate ? generateClick(input) : saveClick(input);
                     Navigator.pop(context);
                   },
-                  decoration:  InputDecoration(hintText: hintText),
+                  decoration: InputDecoration(hintText: hintText),
                 )),
             const SizedBox(
               height: 5,
@@ -45,10 +50,12 @@ import '../../../providers/localization.dart';
                       Navigator.pop(context);
                     },
                     child: Text(tr("save"))),
-                FilledButton(onPressed: () async{
-                 await generateClick(input);
-                 Navigator.pop(context); 
-                }, child: Text(tr("generate")))
+                FilledButton(
+                    onPressed: () async {
+                      await generateClick(input);
+                      Navigator.pop(context);
+                    },
+                    child: Text(tr("generate")))
               ],
             )
           ],
@@ -58,15 +65,35 @@ import '../../../providers/localization.dart';
   }
 }
 
-showLangDialog(context){
-  showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("langCode"),
-                saveClick: (String input) { context.read<Localization>().addLang(input);  }, generateClick: (String input) { 
-                  context.read<Localization>().generateLangValues(input);
-                 },),);
+showLangDialog(context) {
+  showDialog(
+    context: context,
+    
+    builder: (context) => LocalizationDialog(
+      isAutoGenerate: Shared.prefs.getBool("autoGenerateOnLang")??false,
+      hintText: tr("langCode"),
+      saveClick: (String input) {
+        context.read<Localization>().addLang(input);
+      },
+      generateClick: (String input) {
+        context.read<Localization>().generateLangValues(input);
+      },
+    ),
+  );
 }
-showKeyDialog(context){
-  showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("key"),
-                saveClick: (String input) { context.read<Localization>().addKey(input);  }, generateClick: (String input) { 
-                  context.read<Localization>().generateKeyValues(input);
-                 },),);
+
+showKeyDialog(context) {
+  showDialog(
+    context: context,
+    builder: (context) => LocalizationDialog(
+      isAutoGenerate: Shared.prefs.getBool("autoGenerateOnKey")??false,
+      hintText: tr("key"),
+      saveClick: (String input) {
+        context.read<Localization>().addKey(input);
+      },
+      generateClick: (String input) {
+        context.read<Localization>().generateKeyValues(input);
+      },
+    ),
+  );
 }

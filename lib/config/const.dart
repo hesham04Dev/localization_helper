@@ -9,8 +9,8 @@ const kSpacing = EdgeInsets.all(8);
 const kDefaultLang = "en";
 
 //const for this project
-const double kDrawerWidth = 250;
-const double kLargeScreenWidth = 1000;
+const double kDrawerWidth = 200;
+const double kLargeScreenWidth = 800;
 
 
 final primaryBorderRadius = BorderRadius.circular(45); /*not used*/

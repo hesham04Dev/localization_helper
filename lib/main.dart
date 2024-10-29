@@ -52,45 +52,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//using 2d scrollablev TODO 
-
-
-//add shortcuts done
-//ctr n to new key done
-// ctrl shift n to new lang done
-// ctrl s to save done
-// ctrl o to open done
-// ctrl i to settings done
-// ctrl q to search done 
 
 
 // todo why shortcuts stops sometimes
  
-// ADD title in home body
 
 // onclick on a lang show onlys the values of it
-// add ai btn to fill all its keys
+// add ai btn to fill all its keys TODO
 
-// make search works
-// works on the settings done
-// save the data in the settings 
-// add on deafult on lang dialog 
-// add default on Key dialog
-// add default on key_Card
-// add dark mode in settings
-// add btn on lang to regenerate 
+// make search works TODO 
+// add btn on lang to regenerate  TODO
 
 
-// on right click on lang or card show update name or delete
-// show something on empty
+// on right click on lang or card show update name or delete TODO
+// show something on empty TODO 
 
-// change the app color to a olive or somthing like 
-// we need to have a lang before adding keys
-// no generate if thers is no lang
-//maybe add a default lang in the settings !important
+// change the app color to a olive or somthing like TODO
+// update the app icons
+// change the shape of the settings and the keypage
+// show alerts for errors and sucsses
+
+
 // if no api key then in the generate btn show alert add api key to enable this feature
 //handle the ai err and show alert with the err message and remove the added data
-//add Darkmode provider done
 
-
+// settings works,alerts ,update or delete dialog,  lang clicking page , shortcuts err ,search,
 
