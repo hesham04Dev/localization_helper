@@ -71,7 +71,7 @@ class LocalizationAIService {
 
 class Localization with ChangeNotifier {
   final LocalizationData dataManager = LocalizationData();
-  final LocalizationFileManager _fileManager = LocalizationFileManager();
+  final LocalizationFileManager fileManager = LocalizationFileManager();
   final LocalizationAIService _aiService = LocalizationAIService();
   CherryToast? toast;
 
@@ -118,15 +118,17 @@ class Localization with ChangeNotifier {
    if(notify) notifyListeners();
   }
 
-  Future<void> saveToJson(String dirPath) async {
-    await _fileManager.saveToJson(dataManager.data, dirPath);
+  Future<void> saveToJson() async {
+    await fileManager.saveToJson(dataManager.data);
   }
 
-  Future<void> loadFromJson(String dirPath) async {
-    dataManager.data = await _fileManager.loadFromJson(dirPath);
+  Future<void> loadFromJson() async {
+    dataManager.data = await fileManager.loadFromJson();
     notifyListeners();
   }
-
+  Future<void> saveToDart() async {
+    await fileManager.saveToDart(dataManager.data);
+  }
   Future<void> generateKeyValues(String key) async {
     var param = {
       for (var lang in languages()) lang: dataManager.data[lang]?[key] ?? ""

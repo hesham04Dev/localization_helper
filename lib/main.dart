@@ -84,3 +84,5 @@ class MyApp extends StatelessWidget {
 // add direction if ar or en see the easy localization 
 // export not found key to a file in localization lite
 
+
+// err in the card adding set state err
