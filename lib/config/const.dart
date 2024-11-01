@@ -7,10 +7,12 @@ const kAccentColor = Colors.green;
 const kFont = "Dubai";
 const kSpacing = EdgeInsets.all(8);
 const kDefaultLang = "en";
+const double kMinFontSize= 10;
 
 //const for this project
 const double kDrawerWidth = 200;
 const double kLargeScreenWidth = 800;
+const double kLanguageWidth =100;
 
 
 final primaryBorderRadius = BorderRadius.circular(45); /*not used*/

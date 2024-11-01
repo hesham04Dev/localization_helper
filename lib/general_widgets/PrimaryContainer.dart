@@ -10,6 +10,7 @@ class PrimaryContainer extends StatelessWidget {
   final double? paddingHorizontal;
   final double margin;
   final double borderRadius;
+  final BoxConstraints? constraints;
   const PrimaryContainer({
     super.key,
     required this.child,
@@ -20,7 +21,8 @@ class PrimaryContainer extends StatelessWidget {
     this.paddingHorizontal,
     this.margin = 8,
     this.withBorder = false,
-    this.borderRadius = 45
+    this.borderRadius = 45,
+    this.constraints
   });
 
   @override
@@ -30,6 +32,7 @@ class PrimaryContainer extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       height: height,
       width: width,
+      constraints: constraints,
       padding: EdgeInsets.symmetric(
           vertical: padding, horizontal: paddingHorizontal ?? padding),
       margin: EdgeInsets.all(margin),

@@ -19,7 +19,9 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.13.0"
+  
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,20 +30,21 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  auto_size_text: ^3.0.0
-  file_picker: ^8.1.3
+  auto_size_text: 
+  cherry_toast: 
+  file_picker: 
   flutter:
     sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  google_generative_ai: ^0.4.6
-  http: ^1.2.2
-  localization_lite: ^1.0.7
-  provider: ^6.1.2
-  shared_preferences: ^2.3.2
-  two_dimensional_scrollables: ^0.3.3
+  google_generative_ai: 
+  http: 
+  localization_lite:
+  provider: 
+  shared_preferences: 
+ 
 
 
 dev_dependencies:
@@ -53,7 +56,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,6 +71,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icons/
     - assets/localization/
 
   # An image asset can refer to one or more resolution-specific "variants", see

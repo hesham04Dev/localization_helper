@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:localization_helper/aky.dart';
 import 'package:localization_helper/controller/prefs.dart';
+import 'package:localization_lite/translate.dart';
 
 import 'ai_service.dart';
 
@@ -41,10 +44,8 @@ then you send to me {"key":"key1","en":"hello","ar":"مرحبا"}
      response = await model.generateContent(content);
     // print(response.text);
      result = removeMdJson(response.text ?? "");}
-    catch(e){
-      // show alert
-      print(e);
-      
+    catch(e){  
+      return e.toString();
     }
     // print(result);
     return result??"";
@@ -81,8 +82,7 @@ ${jsonEncode(langAndKeysAndValues)}
        result = removeMdJson(response.text ?? "");
     // print(result);
     }catch(e){
-      //show err alert
-      print(e);
+      return e.toString();
     }
     
     return result;

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
-import 'package:localization_helper/models/PrimaryContainer.dart';
+import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
+import 'package:localization_helper/general_widgets/imageIcon.dart';
 import 'package:localization_helper/providers/theme_provider.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
@@ -50,17 +51,19 @@ class _SettingsState extends State<Settings> {
               child: TextField(
                 controller: apiKeyController,
                 decoration: InputDecoration(
-                    suffix: IconButton(
-                        onPressed: () async {
-                          await saveApiKey();
-                        },
-                        icon: const Icon(Icons.save))),
+                    ),
                 obscureText: true,
                 onSubmitted: (String value) async {
                   await saveApiKey();
                   await GeminiService.init();
                 },
               )),
+              IconButton(
+                        onPressed: () async {
+                          await saveApiKey();
+                          await GeminiService.init();
+                        },
+                        icon: IconImage(iconName: "save.png")),
           const SizedBox(
             width: 5,
           ),
@@ -79,18 +82,19 @@ class _SettingsState extends State<Settings> {
             width: 5,
           ),
           SizedBox(
-              width: 100,
+              width: 50,
               child: TextField(
                 controller: defaultLangController,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                    suffix: IconButton(
+                     ),
+                onSubmitted: (String value) async {},
+              )),
+              IconButton(
                         onPressed: () async {
                           await saveApiKey();
                         },
-                        icon: const Icon(Icons.save))),
-                onSubmitted: (String value) async {},
-              )),
+                        icon: IconImage(iconName: "save.png"))
         ],
       ),
     );

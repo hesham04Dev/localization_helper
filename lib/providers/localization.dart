@@ -1,3 +1,4 @@
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -5,10 +6,12 @@ import 'dart:io';
 
 import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/controller/prefs.dart';
+import 'package:localization_lite/translate.dart';
 
 class Localization with ChangeNotifier {
   Map<String, Map<String, String>> data = {};
   String? path;
+  CherryToast? toast;
   Localization() {
     String defaultLang = "en";
     //TODO if default lang is not in an opened project then add it with the keys of the biggest length of the json that has been read
@@ -41,9 +44,38 @@ class Localization with ChangeNotifier {
     });
     if (notify) notifyListeners();
   }
+  
+  void updateKey({ required oldKey,required newKey}){
+    var langs = languages();
+    for(var lang in langs){
+      if(data[lang]?.containsKey(newKey)??false){
+      // show alert
+      return;
+    }
+    }
+    
+    for(var lang in langs){
+      data[lang]?[newKey] = data[lang]?[oldKey]??"";
+    }
+    
+    deleteKey(oldKey);
 
+  }
+  void deleteKey(code){
+    var langs = languages();
+    for(var lang in langs){
+      data[lang]?.remove(code);
+    }
+  notify();
+    
+  }
+  
+  void notify(){
+    notifyListeners();
+  }
   void generateKeyValues(String key) async {
     addKey(key, notify: false);
+    print("aaaa");
     Map<String, String> param = {
       "key": key,
     };
@@ -52,7 +84,15 @@ class Localization with ChangeNotifier {
       param[lang] = data[lang]?[key] ?? "";
     }
     Map<String, String> result = {};
-    var decoded = jsonDecode(await GeminiService().getKeyValues(param));
+    var decoded;
+    var aiResponse = await GeminiService().getKeyValues(param);
+    try{
+    decoded = jsonDecode(aiResponse);
+    }catch(e){
+      toast = errToast();
+      //remove what added 
+      return;
+    }
     decoded.forEach((key, value) {
       result[key] = value;
     });
@@ -66,7 +106,12 @@ class Localization with ChangeNotifier {
   void generateCardValues(Map<String, String> param) async {
     String key = param["key"]!;
     Map<String, String> result = {};
-    var decoded = jsonDecode(await GeminiService().getKeyValues(param));
+    Map decoded;
+    var aiResponse = await GeminiService().getKeyValues(param);
+    try{decoded = jsonDecode(aiResponse);}catch(e){
+      toast = errToast();
+      return;
+    }
     decoded.forEach((key, value) {
       result[key] = value;
     });
@@ -89,7 +134,19 @@ class Localization with ChangeNotifier {
       notifyListeners();
     }
   }
+  void updateLang({required oldCode,required newCode}){
+    if(data.containsKey(newCode)){
+      // show alert
+      return;
+    }
+    data[newCode] = data[oldCode]!;
+    deleteLang(oldCode);
 
+  }
+  void deleteLang(code){
+    data.remove(code);
+    notify();
+  }
   void generateLangValues(String langCode) async {
     addLang(langCode, notify: false);
     Map<String, Map<String, String>> param = {};
@@ -97,7 +154,12 @@ class Localization with ChangeNotifier {
     param.addAll({langCode: data[langCode]!});
 
     Map<String, Map<String, String>> result = {};
-    var decoded = jsonDecode(await GeminiService().getLangValues(param));
+    var aiResponse = await GeminiService().getLangValues(param);
+    Map decoded;
+    try{decoded = jsonDecode(aiResponse);}catch(e){
+      toast = errToast();
+        return;
+    }
     decoded.forEach((key, value) {
       result[key] = Map<String, String>.from(value);
     });
@@ -107,23 +169,6 @@ class Localization with ChangeNotifier {
     notifyListeners();
   }
 
-  // Convert localization data to separate JSON files for each language
-  // Future<void> toJson() async {
-  //   var dirPath = await _getPath();
-  //   final dir = Directory(dirPath);
-
-  //   // Create the directory if it doesn't exist
-  //   if (!await dir.exists()) {
-  //     await dir.create(recursive: true);
-  //   }
-
-  //   for (var lang in data.keys) {
-  //     final filePath = '$dirPath/$lang.json';
-  //     final jsonData = jsonEncode(data[lang]);
-  //     await File(filePath).writeAsString(jsonData);
-  //     print('Saved $filePath');
-  //   }
-  // }
 
 Future<void> toDartFile() async {
   // Check preferences for map and constant keys generation
@@ -236,4 +281,15 @@ String _toCamelCase(String key) {
     path ??= await FilePicker.platform.getDirectoryPath();
     return path;
   }
+
+  showTost(context){
+    toast?.show(context);
+    toast=null;
+  }
+  errToast(){
+    return CherryToast.error(
+        title: Text(tr("aiFailedToResponse")),/*action: Text(aiResponse.toString())*/);
+  }
 }
+//TODO need to be edit remove the gemini and use the abstract class to use other ai services
+// improve the prompt for the key

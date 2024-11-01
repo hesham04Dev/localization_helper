@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/fn/general.dart';
+import 'package:localization_helper/general_widgets/imageIcon.dart';
 import 'package:localization_helper/main.dart';
 import 'package:localization_helper/providers/localization.dart';
-import 'package:localization_helper/models/click_detector.dart';
+import 'package:localization_helper/general_widgets/click_detector.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
+import 'package:localization_helper/screens/home/widgets/update_delete_dialog.dart';
 import 'package:localization_helper/screens/settings/settings.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/PrimaryContainer.dart';
+import '../../../general_widgets/PrimaryContainer.dart';
 
 class DrawerContent extends StatelessWidget {
    const DrawerContent({super.key});
@@ -31,17 +33,17 @@ class DrawerContent extends StatelessWidget {
           Row(
            
             children: [
-            IconButton(icon: const Icon(Icons.settings),onPressed:(){
+            IconButton(icon: IconImage(iconName: "settings.png"),onPressed:(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings(),));
             } ,),
             const Expanded(child: SizedBox()),
-            IconButton(icon: const Icon(Icons.folder),onPressed:(){
+            IconButton(icon:  IconImage(iconName: "folder.png"),onPressed:(){
               openFolder(context);
             } ,),
-            IconButton(icon: const Icon(Icons.save),onPressed:(){
+            IconButton(icon: IconImage(iconName: "save.png"),onPressed:(){
               saveData(context);
             } ,),
-            IconButton(icon: const Icon(Icons.add),onPressed:(){showLangDialog(context);} ,),
+            IconButton(icon: IconImage(iconName: "star.png",size: 20,),onPressed:(){showLangDialog(context);} ,),
             // ShortcutButton(icon: const Icon(Icons.add), logicalKeySet: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift, LogicalKeyboardKey.keyN), onClick: (){
             //   showDialog(context: context, builder: (context) =>  LocalizationDialog( hintText: tr("langCode"),
             //     saveClick: (String input) { context.read<Localization>().addLang(input);  }, generateClick: (String input) {  },),);
@@ -61,9 +63,10 @@ class DrawerContent extends StatelessWidget {
       langTiles.add( ClickDetector(
         onRightClick: (){
           print("click right");//As long press 
+          showUpdateDeleteLangDialog(context, oldCode: langCode);
         },
         child: ListTile(
-              leading: const Icon(Icons.file_open),
+              leading: IconImage(iconName: "file.png"),
               title: Text("$langCode.json"),
               onTap: () {
                //TODO show the keys and values for this lang only

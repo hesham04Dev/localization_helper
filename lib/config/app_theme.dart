@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization_helper/general_widgets/imageIcon.dart';
 
 
 import 'const.dart';
@@ -16,7 +17,8 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
       iconColor: accentColor,
       selectedTileColor: accentColor.shade100,
           ),
-     
+    dialogBackgroundColor: accentColor.shade100,
+    
     tabBarTheme: const TabBarTheme(dividerColor: Colors.transparent),
     dropdownMenuTheme: DropdownMenuThemeData(
         menuStyle: MenuStyle(
@@ -61,7 +63,9 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
 ),
 dividerColor: accentColor,
     dialogTheme:
-        DialogTheme(backgroundColor: isDark ? Colors.black : Colors.white),
+        DialogTheme(backgroundColor:  accentColor.withOpacity(0.2),
+        barrierColor: isDark ? Colors.black26 : Colors.black12
+        ),
     iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
             iconColor: WidgetStatePropertyAll(
@@ -85,7 +89,12 @@ dividerColor: accentColor,
       color: swatch.primary,
     ),
     colorScheme: swatch,
+     actionIconTheme: ActionIconThemeData(
+         backButtonIconBuilder: (context) => IconImage(iconName: "back.png"),
+      ),
     appBarTheme: AppBarTheme(
+ 
+     
       backgroundColor: isDark ? kDarkGrey : kWhite,
       titleTextStyle: TextStyle(
         fontWeight: FontWeight.w600,
@@ -94,6 +103,7 @@ dividerColor: accentColor,
         color: swatch.primary,
       ),
       centerTitle: true,
+
     ),
     hintColor: accentColor,
     cardColor: primaryColor,

@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
               themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
               debugShowCheckedModeBanner: false,
               theme: buildTheme(accentColor, isDarkMode),
-              home:  Home());
+              home:  const Home());
         });
   }
 }
@@ -76,5 +76,9 @@ class MyApp extends StatelessWidget {
 // if no api key then in the generate btn show alert add api key to enable this feature
 //handle the ai err and show alert with the err message and remove the added data
 
-// settings works,alerts ,update or delete dialog,  lang clicking page , shortcuts err ,search,
+// lang clicking page , shortcuts err ,search,
 
+//prevent the renaming and deleting the default lang
+
+// add online json files 
+// add direction if ar or en see the easy localization 

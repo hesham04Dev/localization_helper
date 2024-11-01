@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/fn/general.dart';
-import 'package:localization_helper/models/PrimaryContainer.dart';
+import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
+import 'package:localization_helper/general_widgets/imageIcon.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
 import 'package:localization_helper/widgets/key_card.dart';
@@ -13,22 +15,34 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var horizontalController = ScrollController();
-    var verticalController = ScrollController();
     var mediaQuery = MediaQuery.sizeOf(context); //this to update the screen when size changes
     var keys = context.watch<Localization>().keys();
     var languages = context.watch<Localization>().languages();
+
+    double getMinWidth(){
+
+    var totalWidth = mediaQuery.width;
+    var availableWidth = totalWidth;
+    if(totalWidth > kLargeScreenWidth){
+       availableWidth -= kDrawerWidth;
+    }
+    if(availableWidth > 0)    return availableWidth;
+    return 0;
+  }
+    var minCardWidth = getMinWidth();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppBar(
           // refresh the home if the size of screen changed to show the menu or hide it
           title: Text(tr("home")),
           actions: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: IconImage(iconName: "search.png",),
               onPressed: () {},
             ),
               IconButton(
-              icon: Icon(Icons.add),
+              icon: IconImage(iconName: "star.png",size: 20,),
               onPressed: () {
                 showKeyDialog(context);
               },
@@ -43,32 +57,27 @@ class HomeBody extends StatelessWidget {
             controller: horizontalController ,
             scrollDirection: Axis.horizontal,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
               PrimaryContainer(
               paddingHorizontal: 20,
               borderRadius: 0,
+              constraints: BoxConstraints(
+                minWidth: minCardWidth
+              ),
               margin: 0,
-              child:  Row(children:[SizedBox(width: 100, child:  Text(tr("key"))),...List.generate(languages.length, (index) => SizedBox( width: 100, child:Text(languages[index],)),)]),
+              child:  Row(children:[SizedBox(width: kLanguageWidth, child:  Text(tr("key"))),...List.generate(languages.length, (index) => SizedBox( width: kLanguageWidth, child:Text(languages[index],)),),]),
             ),
             SizedBox(
               height: mediaQuery.height -95,
-                child: Scrollbar(
-                  controller: verticalController,
-                  thumbVisibility: true,
-                  scrollbarOrientation: ScrollbarOrientation.left,
-                  child: SingleChildScrollView(
-                    
-                    controller: verticalController,
-                    child: Column(
-                      children: List.generate(keys.length,(index) {
-                      return KeyCard(localizationKey: keys[reverseIndex(listLength: keys.length, index: index)]);
-                    }, )
-                       
-                    ),
-                    
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(keys.length,(index) {
+                    return KeyCard(minWidth: minCardWidth,localizationKey: keys[reverseIndex(listLength: keys.length, index: index)]);
+                  }, )
+                     
                   ),
+                  
                 )),
             ],),
           ),
@@ -78,5 +87,8 @@ class HomeBody extends StatelessWidget {
       ],
     );
   }
+
+  
+
 }
 

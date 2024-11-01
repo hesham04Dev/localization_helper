@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization_helper/controller/prefs.dart';
-import 'package:localization_helper/models/PrimaryContainer.dart';
+import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +30,7 @@ class _KeyPageState extends State<KeyPage> {
          param[langs[i]] = controllers[i].text;
       }
      localizationInstance.generateCardValues(param);
+     localizationInstance.showTost(context);
     setState(() {
       
     });
