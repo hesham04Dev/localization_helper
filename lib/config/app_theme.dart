@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_color_utils/flutter_color_utils.dart';
 import 'package:localization_helper/general_widgets/imageIcon.dart';
-
 
 import 'const.dart';
 
@@ -8,7 +8,6 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
   final ThemeData base = isDark ? ThemeData.dark() : ThemeData.light();
   Color backgroundColor = isDark ? kDarkGrey : kWhite;
   Color primaryColor = accentColor;
-  print(primaryColor);
   final swatch = ColorScheme.fromSwatch(
       primarySwatch: accentColor,
       brightness: isDark ? Brightness.dark : Brightness.light);
@@ -16,9 +15,8 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
     listTileTheme: ListTileThemeData(
       iconColor: accentColor,
       selectedTileColor: accentColor.shade100,
-          ),
+    ),
     dialogBackgroundColor: accentColor.shade100,
-    
     tabBarTheme: const TabBarTheme(dividerColor: Colors.transparent),
     dropdownMenuTheme: DropdownMenuThemeData(
         menuStyle: MenuStyle(
@@ -45,34 +43,40 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
         unselectedItemColor: Colors.grey,
         selectedItemColor: swatch.primary,
         selectedLabelStyle: TextStyle(color: swatch.primary)),
-    switchTheme: SwitchThemeData(
-  trackOutlineColor: WidgetStateProperty.all(
-      swatch.primary.withOpacity(0.2)),
-  thumbColor: WidgetStateProperty.resolveWith((states) {
-    if (states.contains(WidgetState.selected)) {
-      return swatch.primary; // Color when switch is ON
-    }
-    return accentColor.shade100; // Color when switch is OFF
-  }),
-  trackColor: WidgetStateProperty.resolveWith((states) {
-    if (states.contains(WidgetState.selected)) {
-      return swatch.primary; // Color when switch is ON
-    }
-    return isDark ? kDarkGrey: kWhite; // Color when switch is OFF
-  }),
-),
-dividerColor: accentColor,
-    dialogTheme:
-        DialogTheme(backgroundColor:  accentColor.withOpacity(0.2),
-        barrierColor: isDark ? Colors.black26 : Colors.black12
+        drawerTheme: DrawerThemeData(
+           backgroundColor: Colors.black87,
+           
+           scrimColor: Colors.black45
         ),
+    switchTheme: SwitchThemeData(
+      trackOutlineColor:
+          WidgetStateProperty.all(swatch.primary.withOpacity(0.2)),
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return swatch.primary; // Color when switch is ON
+        }
+        return accentColor.shade100; // Color when switch is OFF
+      }),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return swatch.primary; // Color when switch is ON
+        }
+        return isDark ? kDarkGrey : kWhite; // Color when switch is OFF
+      }),
+    ),
+    dividerColor: accentColor,
+    dialogTheme: DialogTheme(
+        backgroundColor: accentColor.withOpacity(0.2),
+        barrierColor: isDark ? Colors.black26 : Colors.black12),
     iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
             iconColor: WidgetStatePropertyAll(
       swatch.primary,
     ))),
     inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: isDark ? Colors.white : Colors.black,fontWeight: FontWeight.normal )),
+        hintStyle: TextStyle(
+            color: isDark ? Colors.white : Colors.black,
+            fontWeight: FontWeight.normal)),
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
             textStyle: WidgetStatePropertyAll(TextStyle(
@@ -89,12 +93,10 @@ dividerColor: accentColor,
       color: swatch.primary,
     ),
     colorScheme: swatch,
-     actionIconTheme: ActionIconThemeData(
-         backButtonIconBuilder: (context) => IconImage(iconName: "back.png"),
-      ),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (context) => IconImage(iconName: "back.png"),
+    ),
     appBarTheme: AppBarTheme(
- 
-     
       backgroundColor: isDark ? kDarkGrey : kWhite,
       titleTextStyle: TextStyle(
         fontWeight: FontWeight.w600,
@@ -103,7 +105,6 @@ dividerColor: accentColor,
         color: swatch.primary,
       ),
       centerTitle: true,
-
     ),
     hintColor: accentColor,
     cardColor: primaryColor,
@@ -127,8 +128,8 @@ TextTheme _buildTextTheme(TextTheme base, Color color) {
         fontWeight: FontWeight.bold,
         fontFamily: kFont),
     labelLarge: base.labelLarge!.copyWith(color: color, fontFamily: kFont),
-    bodySmall: base.bodySmall!
-        .copyWith(color: color, fontSize: 14, fontFamily: kFont),
+    bodySmall:
+        base.bodySmall!.copyWith(color: color, fontSize: 14, fontFamily: kFont),
     headlineSmall: base.headlineSmall!
         .copyWith(color: color, fontSize: 22, fontFamily: kFont),
     titleMedium: base.titleMedium!

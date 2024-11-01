@@ -73,11 +73,11 @@ showLangDialog(context) {
       isAutoGenerate: Shared.prefs.getBool("autoGenerateOnLang")??false,
       hintText: tr("langCode"),
       saveClick: (String input) {
-        context.read<Localization>().addLang(input);
+        context.read<Localization>().addLanguage(input);
       },
       generateClick: (String input) {
         context.read<Localization>().generateLangValues(input);
-         context.read<Localization>().showTost(context);
+         context.read<Localization>().showToast(context);
         context.read<Localization>().notify();
       },
     ),
@@ -95,7 +95,7 @@ showKeyDialog(context) {
       },
       generateClick: (String input) {
         context.read<Localization>().generateKeyValues(input);
-        context.read<Localization>().showTost(context);
+        context.read<Localization>().showToast(context);
         context.read<Localization>().notify();
       },
     ),

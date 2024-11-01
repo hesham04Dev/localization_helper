@@ -18,7 +18,7 @@ class _KeyPageState extends State<KeyPage> {
   Widget build(BuildContext context) {
     var localizationInstance = context.read<Localization>();
     var langs = localizationInstance.languages();
-    var keyValues = localizationInstance.getKeyValues(widget.localizationKey);
+    var keyValues = localizationInstance.dataManager.getKeyValues(widget.localizationKey);
     List controllers = List.generate(
       langs.length,
       (index) => TextEditingController(text: keyValues[index]),
@@ -30,7 +30,7 @@ class _KeyPageState extends State<KeyPage> {
          param[langs[i]] = controllers[i].text;
       }
      localizationInstance.generateCardValues(param);
-     localizationInstance.showTost(context);
+     localizationInstance.showToast(context);
     setState(() {
       
     });
@@ -66,8 +66,8 @@ class _KeyPageState extends State<KeyPage> {
                           TextButton(
                               onPressed: () {
                                 for (int i = 0; i < controllers.length; i++) {
-                                  localizationInstance
-                                          .data[langs[i]]![widget.localizationKey] =
+                                  localizationInstance.
+                                          dataManager.data[langs[i]]![widget.localizationKey] =
                                       controllers[i].text;
                                 }
                                 Navigator.pop(context);

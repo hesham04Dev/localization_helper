@@ -82,3 +82,5 @@ class MyApp extends StatelessWidget {
 
 // add online json files 
 // add direction if ar or en see the easy localization 
+// export not found key to a file in localization lite
+

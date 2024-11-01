@@ -102,6 +102,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_color_utils:
+    dependency: "direct main"
+    description:
+      name: flutter_color_utils
+      sha256: d08c74d3ae37cd19257c4b5d03b2764fe508e1ed2681caaad2f81e78f7ce0f3e
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   flutter_lints:
     dependency: "direct dev"
     description:

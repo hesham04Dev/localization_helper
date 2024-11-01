@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 //General const
 const kLightGrey = Color(0xFFE8E8E8);
-const kDarkGrey = Color(0xFF202020);
+// const kDarkGrey = Color(0xFF202020);
+const kDarkGrey = Color(0xFF0a140a);
 const kWhite = Colors.white;
 const kAccentColor = Colors.green;
 const kFont = "Dubai";
