@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
 // if no api key then in the generate btn show alert add api key to enable this feature
 //handle the ai err and show alert with the err message and remove the added data
 
-// lang clicking page , shortcuts err ,search,
+// shortcuts err ,search,
 
 //prevent the renaming and deleting the default lang
 

@@ -1,30 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:cherry_toast/cherry_toast.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
+import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/helpers/files_helper.dart';
 import 'package:localization_lite/translate.dart';
 
 class LocalizationData {
   Map<String, Map<String, String>> data = {};
-
+  Map<String, Map<String, String>> filteredData ={};
+  Map<String,String> filters ={};
+  _getData([isFiltered = false]){
+    if(isFiltered){return filteredData;}
+    return data;
+  }
   LocalizationData() {
     String defaultLang = Shared.prefs.getString("defaultLang") ?? kDefaultLang;
     //TODO if default lang is not in an opened project then add it with the keys of the biggest length of the json that has been read
     data = {defaultLang: {}};
+    restFilteredData();
   }
 
-  List<String> languages() => data.keys.toList(growable: false);
+  List<String> languages({filtered = false}) { 
+   
+  return _getData(filtered).keys.toList(growable: false);}
 
-  List<String> keys() =>
-      data.isEmpty ? [] : data[languages()[0]]?.keys.toList() ?? [];
+  List<String> keys({filtered = false}) {
+    var _data = _getData(filtered);
+    return   _data.isEmpty ? [] : _data[languages(filtered: true)[0]]?.keys.toList() ?? [];}
 
-  List<String> getKeyValues(String key) {
-    return languages().map((lang) => data[lang]?[key] ?? "").toList();
+  List<String> getKeyValues(String key,{filtered =false}) {
+    // print(filteredData);
+    return languages(filtered:filtered ).map((lang) => data[lang]?[key] ?? "").toList();
   }
 
   void addKey(String key) {
@@ -43,6 +55,46 @@ class LocalizationData {
   void deleteLang(String langCode) {
     data.remove(langCode);
   }
+
+  void filterByLang(String lang){
+    filters["langFilter"] = lang;
+    filters["keyFilter"] = "";
+    if(filters["langFilter"] == "") {
+      restFilteredData();
+      return;
+    }
+    filteredData = {lang : data[lang]??{}};
+  }
+  void filterByKey(String key) {
+    filters["keyFilter"] = key;
+  filteredData = {for (var lang in languages()) lang: {}}; 
+  final similarKeys = data[defaultLang()]?.keys.where((element) => element.contains(key)).toList(growable: false) ?? [];
+  
+  for (var lang in languages()) {
+    final languageData = filteredData[lang]!;
+    for (var key in similarKeys) {
+      languageData[key] = data[lang]?[key] ?? "";
+    }
+  }
+}
+  void restFilteredData(){
+    filteredData = data;
+  }
+  void updateFilter(){
+    restFilteredData();
+    print("the filters");
+    print(filters);
+     if (filters["langFilter"]?.isNotEmpty ?? false) {
+    filterByLang(filters["langFilter"]??"");
+  }
+
+  if (filters["keyFilter"]?.isNotEmpty ?? false) {
+    filterByKey(filters["keyFilter"]??"");
+  }
+     print(filteredData);
+  }
+
+ 
 }
 
 class LocalizationAIService {
@@ -80,6 +132,7 @@ class Localization with ChangeNotifier {
 
   Future<void> addKey(String key) async {
     dataManager.addKey(key);
+    dataManager.updateFilter();
     notifyListeners();
   }
 
@@ -105,6 +158,7 @@ class Localization with ChangeNotifier {
     for (var lang in langs) {
       dataManager.data[lang]?.remove(code);
     }
+    dataManager.updateFilter();
     notifyListeners();
   }
 
@@ -115,6 +169,7 @@ class Localization with ChangeNotifier {
 
   Future<void> addLanguage(String langCode,{notify =true}) async {
     dataManager.addLang(langCode);
+    dataManager.updateFilter();
    if(notify) notifyListeners();
   }
 
@@ -124,6 +179,7 @@ class Localization with ChangeNotifier {
 
   Future<void> loadFromJson() async {
     dataManager.data = await fileManager.loadFromJson();
+    dataManager.updateFilter();
     notifyListeners();
   }
   Future<void> saveToDart() async {
@@ -155,7 +211,7 @@ class Localization with ChangeNotifier {
     for (var lang in result.keys) {
       dataManager.data[lang]?[key] = result[lang] ?? "";
     }
-    print(dataManager.data);
+    // print(dataManager.data);
     notifyListeners();
   }
 
@@ -171,6 +227,7 @@ class Localization with ChangeNotifier {
   }
   void deleteLang(code){
     dataManager.data.remove(code);
+    dataManager.updateFilter();
     notify();
   }
   void generateLangValues(String langCode) async {
@@ -191,7 +248,7 @@ class Localization with ChangeNotifier {
     });
 
     dataManager.data[langCode] = result[langCode] ?? {};
-    print(dataManager.data);
+    // print(dataManager.data);
     notifyListeners();
   }
 

@@ -26,7 +26,7 @@ class _KeyCardState extends State<KeyCard> {
   @override
   Widget build(BuildContext context) {
     localizationInstance =context.read<Localization>();
-    keyValues = localizationInstance.dataManager.getKeyValues(widget.localizationKey);
+    keyValues = localizationInstance.dataManager.getKeyValues(widget.localizationKey,filtered: true);
      return Column(
       mainAxisSize: MainAxisSize.min,
        children: [

@@ -16,9 +16,14 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     var horizontalController = ScrollController();
     var mediaQuery = MediaQuery.sizeOf(context); //this to update the screen when size changes
-    var keys = context.watch<Localization>().keys();
-    var languages = context.watch<Localization>().languages();
+    var keys = context.watch<Localization>().dataManager.keys(filtered: true);
+    print(keys.length);
+    print("my keys");
+    var languages = context.watch<Localization>().dataManager.languages(filtered: true);
 
+
+print(keys);
+print(languages);
     double getMinWidth(){
 
     var totalWidth = mediaQuery.width;

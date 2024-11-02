@@ -15,6 +15,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
     listTileTheme: ListTileThemeData(
       iconColor: accentColor,
       selectedTileColor: accentColor.shade100,
+      shape: ContinuousRectangleBorder(borderRadius:primaryBorderRadius)
     ),
     dialogBackgroundColor: accentColor.shade100,
     tabBarTheme: const TabBarTheme(dividerColor: Colors.transparent),
