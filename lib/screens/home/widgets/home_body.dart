@@ -44,7 +44,9 @@ print(languages);
           actions: [
             IconButton(
               icon: IconImage(iconName: "search.png",),
-              onPressed: () {},
+              onPressed: () {
+                showSearchDialog(context);
+              },
             ),
               IconButton(
               icon: IconImage(iconName: "star.png",size: 20,),

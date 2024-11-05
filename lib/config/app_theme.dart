@@ -75,6 +75,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
       swatch.primary,
     ))),
     inputDecorationTheme: InputDecorationTheme(
+      border: InputBorder.none,
         hintStyle: TextStyle(
             color: isDark ? Colors.white : Colors.black,
             fontWeight: FontWeight.normal)),

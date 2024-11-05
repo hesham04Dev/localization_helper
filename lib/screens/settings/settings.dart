@@ -31,7 +31,6 @@ class _SettingsState extends State<Settings> {
     bool isDarkMode = themeInstance.darkMode;
     saveApiKey() async {
       await Shared.prefs.setString("apiKey", apiKeyController.text);
-      //TODO show info saved
     }
 
     apiKeyController.text = Shared.prefs.getString('apiKey') ?? "";
@@ -158,6 +157,9 @@ class _SettingsState extends State<Settings> {
               title: Text(tr("generateConstKeys")),
               value: generateConstKeys,
             ),
+
+            
+
           ],
         )),
       ),

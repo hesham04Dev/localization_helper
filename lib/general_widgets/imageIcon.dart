@@ -13,12 +13,16 @@ class IconImage extends StatelessWidget {
       this.opacity = 1.0});
   @override
   Widget build(BuildContext context) {
-    color ??= Theme.of(context).primaryColor.withOpacity(opacity);
-    return Image.asset(
-      "assets/icons/$iconName",
-      height: size,
-      width: size,
-      color: color,
+    // color ??= Theme.of(context).primaryColor.withOpacity(opacity);
+    return Opacity(
+      opacity: opacity,
+      child: ImageIcon(
+                 AssetImage("assets/icons/$iconName"),
+                    size: size,
+                    color: color,
+                   ),
     );
+    
   }
 }
+
