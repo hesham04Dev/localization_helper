@@ -24,16 +24,21 @@ class _KeyPageState extends State<KeyPage> {
       (index) => TextEditingController(text: keyValues[index]),
     );
 
-   generateKeyCard(){
+   generateKeyCard() async{
     var param = {"key": widget.localizationKey};
     for (int i = 0; i < controllers.length; i++) {
          param[langs[i]] = controllers[i].text;
       }
-     localizationInstance.generateCardValues(param);
+     await localizationInstance.generateCardValues(param);
      localizationInstance.showToast(context);
+     final data = localizationInstance.dataManager.data;
+     for (int i = 0; i < controllers.length; i++) {
+         controllers[i].text = data[langs[i]]?[widget.localizationKey];
+      }
     setState(() {
       
     });
+    
   }
 
     return Scaffold(

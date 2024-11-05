@@ -196,7 +196,7 @@ class Localization with ChangeNotifier {
     notifyListeners();
   }
 
- void generateCardValues(Map<String, String> param) async {
+ Future<void> generateCardValues(Map<String, String> param) async {
     String key = param["key"]!;
     Map<String, String> result = {};
     Map decoded;
