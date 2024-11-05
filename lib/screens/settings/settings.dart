@@ -7,6 +7,7 @@ import 'package:localization_helper/general_widgets/imageIcon.dart';
 import 'package:localization_helper/providers/theme_provider.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -66,8 +67,13 @@ class _SettingsState extends State<Settings> {
           const SizedBox(
             width: 5,
           ),
-          Text("${tr("howToGetOne")}?")
-          //TODO make it hrefable
+          TextButton(onPressed: () async {
+            var url = Uri.parse("https://aistudio.google.com/app/apikey");
+            if (!await launchUrl(url)) {
+            throw 'Could not launch $url';
+    }
+          },child: Text("${tr("howToGetOne")}?")),
+          
         ],
       ),
     );

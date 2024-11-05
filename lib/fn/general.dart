@@ -1,9 +1,11 @@
+import 'package:asset_icon/asset_icon.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
 import 'package:localization_helper/general_widgets/imageIcon.dart';
+import 'package:localization_helper/generated/icons.g.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +63,7 @@ showSearchDialog(BuildContext context){
                 },
                 decoration: InputDecoration(hintText: tr("key"),), ),
             ),
-            IconButton( onPressed: (){ submit();}, icon: IconImage(iconName: "search.png",))
+            IconButton( onPressed: (){ submit();}, icon: AssetIcon(iconName: AssetIcons.search,))
       
           ],
       ),

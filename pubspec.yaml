@@ -30,6 +30,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  asset_icon: ^1.0.0
   auto_size_text: 
   cherry_toast: 
   file_picker: 
@@ -45,6 +46,7 @@ dependencies:
   localization_lite:
   provider: 
   shared_preferences: 
+  url_launcher: ^6.3.1
  
 
 

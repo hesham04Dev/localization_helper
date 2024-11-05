@@ -1,3 +1,4 @@
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/app_theme.dart';
