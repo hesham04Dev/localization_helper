@@ -17,13 +17,13 @@ class HomeBody extends StatelessWidget {
     var horizontalController = ScrollController();
     var mediaQuery = MediaQuery.sizeOf(context); //this to update the screen when size changes
     var keys = context.watch<Localization>().dataManager.keys(filtered: true);
-    print(keys.length);
-    print("my keys");
+    // print(keys.length);
+    // print("my keys");
     var languages = context.watch<Localization>().dataManager.languages(filtered: true);
 
 
-print(keys);
-print(languages);
+// print(keys);
+// print(languages);
     double getMinWidth(){
 
     var totalWidth = mediaQuery.width;
@@ -35,6 +35,7 @@ print(languages);
     return 0;
   }
     var minCardWidth = getMinWidth();
+    String? langFilter = context.read<Localization>().dataManager.filters["langFilter"];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -42,6 +43,10 @@ print(languages);
           // refresh the home if the size of screen changed to show the menu or hide it
           title: Text(tr("home")),
           actions: [
+            if(langFilter?.isNotEmpty??false)
+            FilledButton(onPressed: () {
+              context.read<Localization>().generateLangValues(langFilter!);
+            },child: Text(tr("generate")),),
             IconButton(
               icon: IconImage(iconName: "search.png",),
               onPressed: () {

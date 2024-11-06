@@ -58,7 +58,7 @@ showSearchDialog(BuildContext context){
                   searchText = value;
                 },
                 onFieldSubmitted: (value) {
-                  print(value);
+                  // print(value);
                   submit();
                 },
                 decoration: InputDecoration(hintText: tr("key"),), ),

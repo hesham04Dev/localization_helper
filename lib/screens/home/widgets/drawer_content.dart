@@ -94,7 +94,7 @@ class _DrawerContentState extends State<DrawerContent> {
                 .dataManager
                 .filterByLang(selectedLangCode??"");
             context.read<Localization>().notify();
-            print(context.read<Localization>().dataManager.filteredData);
+            // print(context.read<Localization>().dataManager.filteredData);
             });
           },
         ),

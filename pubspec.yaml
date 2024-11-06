@@ -43,7 +43,7 @@ dependencies:
   flutter_color_utils: ^0.0.1
   google_generative_ai: 
   http: 
-  localization_lite:
+  localization_lite: ^1.0.10
   provider: 
   shared_preferences: 
   url_launcher: ^6.3.1

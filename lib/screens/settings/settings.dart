@@ -132,7 +132,7 @@ class _SettingsState extends State<Settings> {
             generateSwitchList(
               onChanged: (value)async {
                 await Shared.prefs.setBool("autoGenerateOnLang", value);
-                print(value);
+                // print(value);
                 autoGenerateOnLang = autoGenerateOnLang;
                 setState((){});
               },

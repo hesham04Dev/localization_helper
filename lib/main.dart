@@ -1,4 +1,3 @@
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/ai_services/gemini.dart';
 import 'package:localization_helper/config/app_theme.dart';
@@ -13,7 +12,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Translate.init(defaultLangCode: "ar");
+  await Translate.init(defaultLangCode: "ar",);
   await Shared.init();
   GeminiService.init();
   

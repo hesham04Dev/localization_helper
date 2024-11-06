@@ -82,8 +82,8 @@ class LocalizationData {
   }
   void updateFilter(){
     restFilteredData();
-    print("the filters");
-    print(filters);
+    // print("the filters");
+    // print(filters);
      if (filters["langFilter"]?.isNotEmpty ?? false) {
     filterByLang(filters["langFilter"]??"");
   }
@@ -91,9 +91,35 @@ class LocalizationData {
   if (filters["keyFilter"]?.isNotEmpty ?? false) {
     filterByKey(filters["keyFilter"]??"");
   }
-     print(filteredData);
+    //  print(filteredData);
   }
 
+
+void checkDefaultLang() {
+  var usedDefaultLang = defaultLang();
+
+  data.putIfAbsent(usedDefaultLang, () => {});
+
+  String maxLengthLang = _getMaxLengthLang();
+
+  if (maxLengthLang != usedDefaultLang) {
+    var maxLengthEntries = data[maxLengthLang] ?? {};
+
+    maxLengthEntries.forEach((key, value) {
+      data[usedDefaultLang]?.putIfAbsent(key, () => "");
+    });
+  }
+}
+String _getMaxLengthLang() {
+  if (data.isEmpty) {
+    return defaultLang();
+  }
+
+  return data.entries
+      .reduce((maxEntry, currentEntry) => 
+          currentEntry.value.length > maxEntry.value.length ? currentEntry : maxEntry)
+      .key;
+}
  
 }
 
@@ -179,6 +205,7 @@ class Localization with ChangeNotifier {
 
   Future<void> loadFromJson() async {
     dataManager.data = await fileManager.loadFromJson();
+    dataManager.checkDefaultLang();
     dataManager.updateFilter();
     notifyListeners();
   }
