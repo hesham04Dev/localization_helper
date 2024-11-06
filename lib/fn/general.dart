@@ -3,20 +3,23 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
-import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
-import 'package:localization_helper/general_widgets/imageIcon.dart';
 import 'package:localization_helper/generated/icons.g.dart';
 import 'package:localization_helper/providers/localization.dart';
+import 'package:localization_helper/screens/home/widgets/shortcuts.dart';
 import 'package:localization_lite/translate.dart';
 import 'package:provider/provider.dart';
 
 saveData(BuildContext context){
   context.read<Localization>().saveToJson();
 }
-openFolder(BuildContext context) async{
-     context.read<Localization>().fileManager.path = await FilePicker.platform.getDirectoryPath();
-   context.read<Localization>().loadFromJson();
-}
+Future<void> openFolder(BuildContext context) async {
+   var result = await FilePicker.platform.getDirectoryPath();
+   if(result != null && result.isNotEmpty) {
+    context.read<Localization>().fileManager.path = result;
+    context.read<Localization>().loadFromJson();
+   }
+  //  shortcutsFocus.requestFocus();
+}    
 Future goToWithReplacement(BuildContext context,WidgetBuilder builder) async{
   return await Navigator.pushReplacement(
     context,
@@ -36,8 +39,8 @@ defaultLang(){
   return Shared.prefs.getString("defaultLang")?? kDefaultLang;
 }
 
-showSearchDialog(BuildContext context){
- 
+showSearchDialog(BuildContext context) async{
+  await Future.delayed(Duration(seconds: 1));
   var searchText = "";
    submit(){
     context.read<Localization>().dataManager.filterByKey(searchText);

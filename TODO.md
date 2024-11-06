@@ -3,7 +3,7 @@
 If you're interested in contributing, here are some important tasks and improvements to consider. Any contribution, big or small, is highly appreciated!
 
 ## Current Issues and Enhancements Needed
-- [ ] **Bug Fix**: Shortcuts occasionally stop working. Investigate and fix the underlying issue.
+- [x] **Bug Fix**: Shortcuts occasionally stop working.
 - [ ] **Testing**: Conduct comprehensive testing to ensure the app functions correctly across different scenarios.
 - [x] **AI Button Feature**: Add an AI button to auto-fill keys when clicked (this should appear when selecting any language).
 - [ ] **Empty Data Display**: Display a meaningful message or placeholder when there is no data to show.
@@ -15,6 +15,6 @@ If you're interested in contributing, here are some important tasks and improvem
 - [x] **Settings Info**: Add in the settings page link how to obtain gemini key.
 - [ ] **Project Name Change**: Update the app's name to "Treefy".
 - [ ] **Logo Creation**: Design a logo using an image of a tree for a more fitting visual identity.
-
+- [ ] **Bug Open Folder**: See why when open folder using shortcuts make it stop working
 Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!
 
