@@ -1,4 +1,4 @@
-name: treefy
+name: localization_helper
 description: "AI Localization Assistant"
 publish_to: 'none' 
 
@@ -31,6 +31,7 @@ dev_dependencies:
 
   flutter_lints: 
   msix: ^3.16.8
+  rename_app: ^1.6.1
 
 flutter:
   uses-material-design: true
@@ -43,6 +44,6 @@ msix_config:
   display_name: Treefy
   publisher_display_name: Hcody
   identity_name: hcody.hesham.treefy
-  msix_version: 0.8.0.0
+  msix_version: 0.8.1.0
   logo_path: C:\Users\hcody\Downloads\treefyLogo.png
   capabilities: internetClient,

@@ -13,7 +13,7 @@ If you're interested in contributing, here are some important tasks and improvem
 - [ ] **AI Service Abstraction**: Refactor the code to remove the direct use of "gemini" and employ an abstract class structure to enable compatibility with other AI services.
 - [ ] **Prompt Improvement**: Enhance the prompt generation logic for better accuracy and results.
 - [x] **Settings Info**: Add in the settings page link how to obtain gemini key.
-- [ ] **Project Name Change**: Update the app's name to "Treefy".
+- [x] **Project Name Change**: Update the app's name to "Treefy".
 - [ ] **Logo Creation**: Design a logo using an image of a tree for a more fitting visual identity.
 - [ ] **Bug Open Folder**: See why when open folder using shortcuts make it stop working
 Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!
