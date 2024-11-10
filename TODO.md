@@ -14,7 +14,7 @@ If you're interested in contributing, here are some important tasks and improvem
 - [ ] **Prompt Improvement**: Enhance the prompt generation logic for better accuracy and results.
 - [x] **Settings Info**: Add in the settings page link how to obtain gemini key.
 - [x] **Project Name Change**: Update the app's name to "Treefy".
-- [ ] **Logo Creation**: Design a logo using an image of a tree for a more fitting visual identity.
+- [x] **Logo Creation**: Design a logo using an image of a tree for a more fitting visual identity.
 - [ ] **Bug Open Folder**: See why when open folder using shortcuts make it stop working
 Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!
 
