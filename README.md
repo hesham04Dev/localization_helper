@@ -1,10 +1,8 @@
 # <img src="./assets/in_readme/treefyLogo.png" width="30px"/> Treefy - AI Localization Assistant
 Treefy is a desktop app designed to help developers easily create JSON files for app localization using AI-powered translations. Eliminate the manual translation workload—Treefy generates multi-language JSON files tailored to your project, ready for integration with most localization frameworks.
 
-<video width="600" controls>
-  <source src="./assets/in_readme/2024-11-10 12-39-04.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+[![Treefy](https://img.youtube.com/vi/Kh9Z4H0p_O8/0.jpg)](https://youtu.be/Kh9Z4H0p_O8)
+
 
 ## 🌟 Features
  - AI-Driven Translations: Automatically generate translations for any language.
