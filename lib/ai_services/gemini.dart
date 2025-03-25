@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:localization_helper/aky.dart';
 import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_lite/translate.dart';
@@ -11,16 +12,21 @@ import 'package:localization_lite/translate.dart';
 import 'ai_service.dart';
 
 class GeminiService extends AIService {
-   static var model ;
-   static init(){
-    model =  GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: Shared.prefs.getString("apiKey")??"",
-  );
+  static var model;
+
+  // GeminiService({required super.context});
+  
+  static init(BuildContext context) {
+    AIService.context = context;
+    model = GenerativeModel(
+      model: 'gemini-1.5-flash-latest',
+      apiKey: Shared.prefs.getString("apiKey") ?? "",
+    );
   }
 
   @override
-  Future<String> getKeyValues(Map<String, String> keysAndValues) async {
+  Future<String> getCustomKeyValues(Map<String, String> keysAndValues) async {
+    
     final prompt = '''
 I have the following key-value pairs, with some keys potentially missing values: $keysAndValues.
 Please attempt to generate values for these keys in each provided language code. Complete any missing translations in JSON format and include the language codes listed, even if values are empty ("") when necessary.
@@ -40,19 +46,19 @@ then you send to me {"key":"key1","en":"hello","ar":"مرحبا"}
     final content = [Content.text(prompt)];
     late final response;
     late final result;
-    try{
-     response = await model.generateContent(content);
-    // print(response.text);
-     result = removeMdJson(response.text ?? "");}
-    catch(e){  
+    try {
+      response = await model.generateContent(content);
+      // print(response.text);
+      result = removeMdJson(response.text ?? "");
+    } catch (e) {
       return e.toString();
     }
     // print(result);
-    return result??"";
+    return result ?? "";
   }
 
   @override
-  Future<String> getLangValues(
+  Future<String> getCustomLangValues(
       Map<String, Map<String, String>> langAndKeysAndValues) async {
     final prompt = '''
 I have translations for specific languages structured as the example.
@@ -74,17 +80,17 @@ Here is the JSON data that requires completion:
 ${jsonEncode(langAndKeysAndValues)}
 ''';
     final content = [Content.text(prompt)];
-  late final response;
-  late final result;
-    try{
-       response = await model.generateContent(content);
-    // print(response.text);
-       result = removeMdJson(response.text ?? "");
-    // print(result);
-    }catch(e){
+    late final response;
+    late final result;
+    try {
+      response = await model.generateContent(content);
+      // print(response.text);
+      result = removeMdJson(response.text ?? "");
+      // print(result);
+    } catch (e) {
       return e.toString();
     }
-    
+
     return result;
   }
 

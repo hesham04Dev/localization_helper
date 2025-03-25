@@ -20,7 +20,7 @@ If you're interested in contributing, here are some important tasks and improvem
 - [ ] **Update icons**: the open folder ,save,back not good
 - [ ] **Update Naming**: the generate on key,card not clear
 - [ ] **generate const keys notworks**
-- [ ] **Add loader**: after each update
+- [x] **Add loader**: after each update
 - [ ] **save text edit**:in edit page add shortcut for save
 - [ ] **The search dialog is late**:update its shape and make it faster
 - [ ] **fix error in small screen**:the dark mode is activated in the sidebar even when it not activated

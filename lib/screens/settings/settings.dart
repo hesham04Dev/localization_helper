@@ -55,13 +55,13 @@ class _SettingsState extends State<Settings> {
                 obscureText: true,
                 onSubmitted: (String value) async {
                   await saveApiKey();
-                  await GeminiService.init();
+                  await GeminiService.init(context);
                 },
               )),
               IconButton(
                         onPressed: () async {
                           await saveApiKey();
-                          await GeminiService.init();
+                          await GeminiService.init(context);
                         },
                         icon: IconImage(iconName: "save.png")),
           const SizedBox(
