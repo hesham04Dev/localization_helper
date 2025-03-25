@@ -31,3 +31,28 @@ If you're interested in contributing, here are some important tasks and improvem
 
 **Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!**
 
+
+
+## For Package
+ - [ ] add ai for localization lite or create new package - me
+ - [ ] 
+
+
+
+## Report
+ - [ ] learn uml basics - ali
+ - [ ] p1: give description and the value this app will add to the dev - hisham
+ - [ ] confirm or improve the p1 - ali
+ - [ ] p2:draw usecase and write it,  - ali
+ - [ ] p3:draw classes diagram - ali
+ - [ ] p4:draw seqance diagram - ali
+ - [ ] conrim or improve the p2->p4 - hisham
+ - [ ] write the fn requirements
+ - [ ] app pages  
+ - [ ] testing
+ - [ ] Difficulties
+ - [ ] Conclusion
+
+
+## POWERPOINT
+ 
