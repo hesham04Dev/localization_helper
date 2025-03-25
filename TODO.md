@@ -16,5 +16,18 @@ If you're interested in contributing, here are some important tasks and improvem
 - [x] **Project Name Change**: Update the app's name to "Treefy".
 - [x] **Logo Creation**: Design a logo using an image of a tree for a more fitting visual identity.
 - [ ] **Bug Open Folder**: See why when open folder using shortcuts make it stop working
-Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!
+- [ ] **Update Prombt**: Add in it give me the best result used in the Application interfaces
+- [ ] **Update icons**: the open folder ,save,back not good
+- [ ] **Update Naming**: the generate on key,card not clear
+- [ ] **generate const keys notworks**
+- [ ] **Add loader**: after each update
+- [ ] **save text edit**:in edit page add shortcut for save
+- [ ] **The search dialog is late**:update its shape and make it faster
+- [ ] **fix error in small screen**:the dark mode is activated in the sidebar even when it not activated
+
+## To be tried
+- [ ] **remove the edit page and make it inline like excel**
+- [ ] **try to add the app feature to the localization_lite package**
+
+**Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!**
 
