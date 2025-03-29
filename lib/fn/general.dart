@@ -35,7 +35,7 @@ Future goTo(BuildContext context,WidgetBuilder builder) async{
 int reverseIndex({required int listLength, required int  index}){
   return listLength - index -1;
 }
-defaultLang(){
+String defaultLang(){
   return Shared.prefs.getString("defaultLang")?? kDefaultLang;
 }
 
@@ -66,7 +66,7 @@ showSearchDialog(BuildContext context) async{
                 },
                 decoration: InputDecoration(hintText: tr("key"),), ),
             ),
-            IconButton( onPressed: (){ submit();}, icon: AssetIcon(iconName: AssetIcons.search,))
+            IconButton( onPressed: (){ submit();}, icon: AssetIcon(AssetIcons.search))
       
           ],
       ),

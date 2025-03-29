@@ -13,12 +13,15 @@ import 'package:localization_lite/translate.dart';
 
 class LocalizationData {
   Map<String, Map<String, String>> data = {};
-  Map<String, Map<String, String>> filteredData ={};
-  Map<String,String> filters ={};
-  _getData([isFiltered = false]){
-    if(isFiltered){return filteredData;}
+  Map<String, Map<String, String>> filteredData = {};
+  Map<String, String> filters = {};
+  _getData([isFiltered = false]) {
+    if (isFiltered) {
+      return filteredData;
+    }
     return data;
   }
+
   LocalizationData() {
     String defaultLang = Shared.prefs.getString("defaultLang") ?? kDefaultLang;
     //TODO if default lang is not in an opened project then add it with the keys of the biggest length of the json that has been read
@@ -26,17 +29,22 @@ class LocalizationData {
     restFilteredData();
   }
 
-  List<String> languages({filtered = false}) { 
-   
-  return _getData(filtered).keys.toList(growable: false);}
+  List<String> languages({filtered = false}) {
+    return _getData(filtered).keys.toList(growable: false);
+  }
 
   List<String> keys({filtered = false}) {
     var _data = _getData(filtered);
-    return   _data.isEmpty ? [] : _data[languages(filtered: true)[0]]?.keys.toList() ?? [];}
+    return _data.isEmpty
+        ? []
+        : _data[languages(filtered: true)[0]]?.keys.toList() ?? [];
+  }
 
-  List<String> getKeyValues(String key,{filtered =false}) {
+  List<String> getKeyValues(String key, {filtered = false}) {
     // print(filteredData);
-    return languages(filtered:filtered ).map((lang) => data[lang]?[key] ?? "").toList();
+    return languages(filtered: filtered)
+        .map((lang) => data[lang]?[key] ?? "")
+        .toList();
   }
 
   void addKey(String key) {
@@ -56,80 +64,88 @@ class LocalizationData {
     data.remove(langCode);
   }
 
-  void filterByLang(String lang){
+  void filterByLang(String lang) {
     filters["langFilter"] = lang;
     filters["keyFilter"] = "";
-    if(filters["langFilter"] == "") {
+    if (filters["langFilter"] == "") {
       restFilteredData();
       return;
     }
-    filteredData = {lang : data[lang]??{}};
+    filteredData = {lang: data[lang] ?? {}};
   }
+
   void filterByKey(String key) {
     filters["keyFilter"] = key;
-  filteredData = {for (var lang in languages()) lang: {}}; 
-  final similarKeys = data[defaultLang()]?.keys.where((element) => element.contains(key)).toList(growable: false) ?? [];
-  
-  for (var lang in languages()) {
-    final languageData = filteredData[lang]!;
-    for (var key in similarKeys) {
-      languageData[key] = data[lang]?[key] ?? "";
+    filteredData = {for (var lang in languages()) lang: {}};
+    final similarKeys = data[defaultLang()]
+            ?.keys
+            .where((element) => element.contains(key))
+            .toList(growable: false) ??
+        [];
+
+    for (var lang in languages()) {
+      final languageData = filteredData[lang]!;
+      for (var key in similarKeys) {
+        languageData[key] = data[lang]?[key] ?? "";
+      }
     }
   }
-}
-  void restFilteredData(){
+
+  void restFilteredData() {
     filteredData = data;
   }
-  void updateFilter(){
+
+  void updateFilter() {
     restFilteredData();
     // print("the filters");
     // print(filters);
-     if (filters["langFilter"]?.isNotEmpty ?? false) {
-    filterByLang(filters["langFilter"]??"");
-  }
+    if (filters["langFilter"]?.isNotEmpty ?? false) {
+      filterByLang(filters["langFilter"] ?? "");
+    }
 
-  if (filters["keyFilter"]?.isNotEmpty ?? false) {
-    filterByKey(filters["keyFilter"]??"");
-  }
+    if (filters["keyFilter"]?.isNotEmpty ?? false) {
+      filterByKey(filters["keyFilter"] ?? "");
+    }
     //  print(filteredData);
   }
 
+  void checkDefaultLang() {
+    var usedDefaultLang = defaultLang();
 
-void checkDefaultLang() {
-  var usedDefaultLang = defaultLang();
+    data.putIfAbsent(usedDefaultLang, () => {});
 
-  data.putIfAbsent(usedDefaultLang, () => {});
+    String maxLengthLang = _getMaxLengthLang();
 
-  String maxLengthLang = _getMaxLengthLang();
+    if (maxLengthLang != usedDefaultLang) {
+      var maxLengthEntries = data[maxLengthLang] ?? {};
 
-  if (maxLengthLang != usedDefaultLang) {
-    var maxLengthEntries = data[maxLengthLang] ?? {};
-
-    maxLengthEntries.forEach((key, value) {
-      data[usedDefaultLang]?.putIfAbsent(key, () => "");
-    });
-  }
-}
-String _getMaxLengthLang() {
-  if (data.isEmpty) {
-    return defaultLang();
+      maxLengthEntries.forEach((key, value) {
+        data[usedDefaultLang]?.putIfAbsent(key, () => "");
+      });
+    }
   }
 
-  return data.entries
-      .reduce((maxEntry, currentEntry) => 
-          currentEntry.value.length > maxEntry.value.length ? currentEntry : maxEntry)
-      .key;
-}
- 
+  String _getMaxLengthLang() {
+    if (data.isEmpty) {
+      return defaultLang();
+    }
+
+    return data.entries
+        .reduce((maxEntry, currentEntry) =>
+            currentEntry.value.length > maxEntry.value.length
+                ? currentEntry
+                : maxEntry)
+        .key;
+  }
 }
 
 class LocalizationAIService {
-  Future<Map<String, String>> fetchKeyValues(
-      String key, Map<String, String> param) async {
+  Future<Map<String, String>> fetchKeyValues( Map<String, String> param) async {
     try {
       var aiResponse = await GeminiService().getKeyValues(param);
       return Map<String, String>.from(jsonDecode(aiResponse));
     } catch (e) {
+      print(e);
       // Error handling
       throw Exception("Failed to fetch AI translations");
     }
@@ -188,15 +204,14 @@ class Localization with ChangeNotifier {
     notifyListeners();
   }
 
-  void notify(){
+  void notify() {
     notifyListeners();
   }
- 
 
-  Future<void> addLanguage(String langCode,{notify =true}) async {
+  Future<void> addLanguage(String langCode, {notify = true}) async {
     dataManager.addLang(langCode);
     dataManager.updateFilter();
-   if(notify) notifyListeners();
+    if (notify) notifyListeners();
   }
 
   Future<void> saveToJson() async {
@@ -209,26 +224,33 @@ class Localization with ChangeNotifier {
     dataManager.updateFilter();
     notifyListeners();
   }
+
   Future<void> saveToDart() async {
     await fileManager.saveToDart(dataManager.data);
   }
+
   Future<void> generateKeyValues(String key) async {
-    var param = {
+    Map<String,String> param = {};
+    param["key"] = key;
+    param.addAll({
       for (var lang in languages()) lang: dataManager.data[lang]?[key] ?? ""
-    };
-    var result = await _aiService.fetchKeyValues(key, param);
+    });
+
+    var result = await _aiService.fetchKeyValues(param);
     result.forEach((lang, value) {
       dataManager.data[lang]?[key] = value;
     });
     notifyListeners();
   }
 
- Future<void> generateCardValues(Map<String, String> param) async {
+  Future<void> generateCardValues(Map<String, String> param) async {
     String key = param["key"]!;
     Map<String, String> result = {};
     Map decoded;
     var aiResponse = await GeminiService().getKeyValues(param);
-    try{decoded = jsonDecode(aiResponse);}catch(e){
+    try {
+      decoded = jsonDecode(aiResponse);
+    } catch (e) {
       toast = errorToast(tr("aiFailedToResponse"));
       return;
     }
@@ -242,33 +264,36 @@ class Localization with ChangeNotifier {
     notifyListeners();
   }
 
-
-  void updateLang({required oldCode,required newCode}){
-    if(dataManager.data.containsKey(newCode)){
+  void updateLang({required oldCode, required newCode}) {
+    if (dataManager.data.containsKey(newCode)) {
       // show alert
       return;
     }
     dataManager.data[newCode] = dataManager.data[oldCode]!;
     deleteLang(oldCode);
-
   }
-  void deleteLang(code){
+
+  void deleteLang(code) {
     dataManager.data.remove(code);
     dataManager.updateFilter();
     notify();
   }
+
   void generateLangValues(String langCode) async {
     addLanguage(langCode, notify: false);
     Map<String, Map<String, String>> param = {};
-    param.addAll({"en": dataManager.data["en"]!});
+    
+    param.addAll({defaultLang(): dataManager.data[defaultLang()]!});
     param.addAll({langCode: dataManager.data[langCode]!});
 
     Map<String, Map<String, String>> result = {};
     var aiResponse = await GeminiService().getLangValues(param);
     Map decoded;
-    try{decoded = jsonDecode(aiResponse);}catch(e){
+    try {
+      decoded = jsonDecode(aiResponse);
+    } catch (e) {
       toast = errorToast(tr("aiFailedToResponse"));
-        return;
+      return;
     }
     decoded.forEach((key, value) {
       result[key] = Map<String, String>.from(value);
@@ -278,7 +303,6 @@ class Localization with ChangeNotifier {
     // print(dataManager.data);
     notifyListeners();
   }
-
 
   void showToast(BuildContext context) {
     toast?.show(context);
@@ -292,4 +316,3 @@ class Localization with ChangeNotifier {
 
 //TODO need to be edit remove the gemini and use the abstract class to use other ai services
 // improve the prompt for the key
-

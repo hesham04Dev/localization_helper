@@ -24,6 +24,10 @@ If you're interested in contributing, here are some important tasks and improvem
 - [ ] **save text edit**:in edit page add shortcut for save
 - [ ] **The search dialog is late**:update its shape and make it faster
 - [ ] **fix error in small screen**:the dark mode is activated in the sidebar even when it not activated
+- [ ]**store the last opened path**: re open it when open the app
+- [ ]**save unsaved files in temp location**: after a while or something
+- [ ]**show alert after saving**: saved correctly
+- [x]**improve the way of getting the result**: find the ```json that end by ``` or find { end by } and get the result
 
 ## To be tried
 - [ ] **remove the edit page and make it inline like excel**
