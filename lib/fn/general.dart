@@ -1,5 +1,4 @@
 import 'package:asset_icon/asset_icon.dart';
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
@@ -94,6 +93,4 @@ showSearchDialog(BuildContext context) async {
     autoCloseDuration: const Duration(seconds: 3),
     type: ToastificationType.error,
   );
-  return CherryToast.error(title: Text(message));
-  // TODO need to remove this and fix the code
 }

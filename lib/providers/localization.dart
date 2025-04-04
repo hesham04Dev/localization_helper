@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:localization_helper/ai_services/ai_service.dart';
 import 'dart:convert';
@@ -168,7 +167,6 @@ class Localization with ChangeNotifier {
   final LocalizationData dataManager = LocalizationData();
   final LocalizationFileManager fileManager = LocalizationFileManager();
   final LocalizationAIService _aiService = LocalizationAIService();
-  CherryToast? toast;
 
   List<String> languages() => dataManager.languages();
   List<String> keys() => dataManager.keys();
@@ -252,7 +250,7 @@ class Localization with ChangeNotifier {
     try {
       decoded = jsonDecode(aiResponse);
     } catch (e) {
-      toast = errorToast(tr("aiFailedToResponse"));
+        errorToast(tr("aiFailedToResponse"));
       return;
     }
     decoded.forEach((key, value) {
@@ -293,7 +291,7 @@ class Localization with ChangeNotifier {
     try {
       decoded = jsonDecode(aiResponse);
     } catch (e) {
-      toast = errorToast(tr("aiFailedToResponse"));
+       errorToast(tr("aiFailedToResponse"));
       return;
     }
     decoded.forEach((key, value) {
@@ -305,12 +303,4 @@ class Localization with ChangeNotifier {
     notifyListeners();
   }
 
-  void showToast(BuildContext context) {
-    toast?.show(context);
-    toast = null;
-  }
-
 }
-
-//TODO need to be edit remove the gemini and use the abstract class to use other ai services
-// improve the prompt for the key

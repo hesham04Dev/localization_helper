@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:localization_helper/fn/general.dart';
+import 'package:localization_lite/translate.dart';
 
 import '../config/const.dart';
 import '../controller/prefs.dart';
@@ -9,14 +14,18 @@ import 'chatgpt.dart';
 
 abstract class AIService {
   static late BuildContext context;
-  // AIService({required this.context});
   static const  aiModels = [
-    GeminiService.name,
-    ChatGPTService.name,
-    DeepSeekService.name,
+    GeminiService.modelName,
+    ChatGPTService.modelName,
+    DeepSeekService.modelName,
   ];
-   static late AIService model;
+  static late AIService model;
+  String get name;
+  late Map data;
+  static late final String apiKey;
+
   static init(context) async{
+    apiKey = Shared.prefs.getString("apiKey")??"";
     AIService.context = context;
     setModel();
   }
@@ -24,14 +33,18 @@ abstract class AIService {
     final modelName = Shared.prefs.getString("defaultAiModel")??kDefaultAiModel;
     print("modelName: $modelName");
       switch(modelName){
-      case GeminiService.name : model = GeminiService();
+      case GeminiService.modelName : model = GeminiService();
       break;
-      case ChatGPTService.name : model =  ChatGPTService();
+      case ChatGPTService.modelName : model =  ChatGPTService();
       break;
-      case DeepSeekService.name : model = DeepSeekService();
+      case DeepSeekService.modelName : model = DeepSeekService();
       break;
     }
   }
+
+ String? getResult();
+ Future<http.Response> getResponse(String prompt);
+
 
   Future<String> getLangValues(
     Map<String, Map<String, String>> langAndKeysAndValues) async {
@@ -42,9 +55,6 @@ abstract class AIService {
     return result;
   }
 
-  Future<String> getCustomLangValues(
-      Map<String, Map<String, String>> langAndKeysAndValues);
-
   Future<String> getKeyValues(Map<String, String> keysAndValues) async {
     context.loaderOverlay.show();
     String values = await getCustomKeyValues(keysAndValues);
@@ -53,7 +63,42 @@ abstract class AIService {
     return result;
   }
 
-  Future<String> getCustomKeyValues(Map<String, String> keysAndValues);
+
+  Future<String> getCustomKeyValues(Map<String, String> keysAndValues) async {
+    final prompt = '''
+    $kCommonKeyValuesPrompt
+    ${jsonEncode(keysAndValues)}
+    ''';
+
+    final result = await _sendRequest(prompt)??"{}";
+    return result;
+  }
+
+  Future<String> getCustomLangValues(
+      Map<String, Map<String, String>> langAndKeysAndValues) async {
+    final prompt = '''
+    $kCommonLangValuesPrompt
+    ${jsonEncode(langAndKeysAndValues)}
+    ''';
+
+    return await _sendRequest(prompt) ?? "{}";
+  }
+
+  Future<String?> _sendRequest(String prompt) async {
+    final apiKey = Shared.prefs.getString("apiKey") ?? "";
+
+    final response = await getResponse(prompt);
+
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body);
+      return getResult()??"{}";
+    } else {
+      errorToast("${tr("failedToFetchFrom")} ${model.name}");
+      return "{}";
+    }
+  }
+
+
 
  String removeMdJson(String content) {
   // Try to extract content between ```json and ```

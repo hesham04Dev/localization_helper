@@ -9,7 +9,7 @@ const kAccentColor = Colors.lightBlue;
 const kFont = "Dubai";
 const kSpacing = EdgeInsets.all(8);
 const kDefaultLang = "en";
-const kDefaultAiModel = GeminiService.name;
+const kDefaultAiModel = GeminiService.modelName;
 
 const double kMinFontSize= 10;
 

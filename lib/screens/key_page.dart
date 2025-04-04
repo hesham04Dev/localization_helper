@@ -30,7 +30,6 @@ class _KeyPageState extends State<KeyPage> {
          param[langs[i]] = controllers[i].text;
       }
      await localizationInstance.generateCardValues(param);
-     localizationInstance.showToast(context);
      final data = localizationInstance.dataManager.data;
      for (int i = 0; i < controllers.length; i++) {
          controllers[i].text = data[langs[i]]?[widget.localizationKey];

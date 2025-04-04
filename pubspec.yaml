@@ -11,7 +11,6 @@ environment:
 dependencies:
   asset_icon: ^1.0.0
   auto_size_text: 
-  cherry_toast: 
   file_picker: 
   flutter:
     sdk: flutter

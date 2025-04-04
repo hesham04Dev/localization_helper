@@ -77,7 +77,6 @@ showLangDialog(context) {
       },
       generateClick: (String input) {
         context.read<Localization>().generateLangValues(input);
-         context.read<Localization>().showToast(context);
         context.read<Localization>().notify();
       },
     ),
@@ -95,7 +94,6 @@ showKeyDialog(context) {
       },
       generateClick: (String input) {
         context.read<Localization>().generateKeyValues(input);
-        context.read<Localization>().showToast(context);
         context.read<Localization>().notify();
       },
     ),
