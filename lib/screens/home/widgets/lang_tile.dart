@@ -1,3 +1,4 @@
+import 'package:asset_icon/asset_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
@@ -24,7 +25,7 @@ class LangTile extends StatelessWidget {
         openEditDialog(context, langCode);
       },
       child: ListTile(
-        leading: IconImage(iconName: "file.png"),
+        leading: AssetIcon( "file.png"),
         title: Text("$langCode.json"),
         tileColor: isSelected ? kAccentColor.withOpacity(0.2) : null, // Highlight if selected
         onTap: onTap, // Call the onTap function from DrawerContent

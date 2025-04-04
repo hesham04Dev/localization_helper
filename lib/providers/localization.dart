@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:localization_helper/ai_services/ai_service.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -142,7 +143,7 @@ class LocalizationData {
 class LocalizationAIService {
   Future<Map<String, String>> fetchKeyValues( Map<String, String> param) async {
     try {
-      var aiResponse = await GeminiService().getKeyValues(param);
+      var aiResponse = await AIService.model.getKeyValues(param);
       return Map<String, String>.from(jsonDecode(aiResponse));
     } catch (e) {
       print(e);
@@ -154,7 +155,7 @@ class LocalizationAIService {
   Future<Map<String, Map<String, String>>> fetchLangValues(
       String langCode, Map<String, Map<String, String>> param) async {
     try {
-      var aiResponse = await GeminiService().getLangValues(param);
+      var aiResponse = await AIService.model.getLangValues(param);
       return Map<String, Map<String, String>>.from(jsonDecode(aiResponse));
     } catch (e) {
       // Error handling
@@ -309,9 +310,6 @@ class Localization with ChangeNotifier {
     toast = null;
   }
 
-  CherryToast errorToast(String message) {
-    return CherryToast.error(title: Text(message));
-  }
 }
 
 //TODO need to be edit remove the gemini and use the abstract class to use other ai services

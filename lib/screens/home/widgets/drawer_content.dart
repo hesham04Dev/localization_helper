@@ -1,3 +1,4 @@
+import 'package:asset_icon/asset_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
@@ -29,7 +30,7 @@ class _DrawerContentState extends State<DrawerContent> {
           Row(
             children: [
               IconButton(
-                icon: IconImage(iconName: "settings.png"),
+                icon: AssetIcon("settings.png"),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -41,19 +42,19 @@ class _DrawerContentState extends State<DrawerContent> {
               ),
               const Expanded(child: SizedBox()),
               IconButton(
-                icon: IconImage(iconName: "folder.png"),
+                icon: AssetIcon("folder.svg"),
                 onPressed: () {
                   openFolder(context);
                 },
               ),
               IconButton(
-                icon: IconImage(iconName: "save.png"),
+                icon: AssetIcon("save.svg"),
                 onPressed: () {
                   saveData(context);
                 },
               ),
               IconButton(
-                icon: IconImage(iconName: "star.png", size: 20),
+                icon: AssetIcon("add.svg", size: 20),
                 onPressed: () {
                   showLangDialog(context);
                 },

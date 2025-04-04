@@ -1,3 +1,4 @@
+import 'package:asset_icon/asset_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color_utils/flutter_color_utils.dart';
 import 'package:localization_helper/general_widgets/imageIcon.dart';
@@ -96,7 +97,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
     ),
     colorScheme: swatch,
     actionIconTheme: ActionIconThemeData(
-      backButtonIconBuilder: (context) => IconImage(iconName: "back.png"),
+      backButtonIconBuilder: (context) => AssetIcon("back.svg"),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: isDark ? kDarkGrey : kWhite,

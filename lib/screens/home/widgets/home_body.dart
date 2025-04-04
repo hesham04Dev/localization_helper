@@ -1,3 +1,4 @@
+import 'package:asset_icon/asset_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/fn/general.dart';
@@ -48,13 +49,13 @@ class HomeBody extends StatelessWidget {
               context.read<Localization>().generateLangValues(langFilter!);
             },child: Text(tr("generate")),),
             IconButton(
-              icon: IconImage(iconName: "search.png",),
+              icon: AssetIcon( "search.svg",),
               onPressed: () {
                 showSearchDialog(context);
               },
             ),
               IconButton(
-              icon: IconImage(iconName: "star.png",size: 20,),
+              icon: AssetIcon( "add.svg",size: 25,),
               onPressed: () {
                 showKeyDialog(context);
               },
