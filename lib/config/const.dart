@@ -14,14 +14,15 @@ const kDefaultAiModel = GeminiService.modelName;
 const double kMinFontSize= 10;
 
 const String kCommonLangValuesPrompt = '''
-I have translations for specific languages structured as the example.
-Please complete only the missing translations for each provided key and language without introducing any new keys or languages.
+You are a translation assistant.
 
-Instructions:
-- Translate and fill missing values based on the keys and languages given.
-- Do not add any new languages or keys.
-- If unsure of a translation, leave the value as an empty string "".
-- Return the completed JSON structure directly as a plain text string, not JSON-encoded.
+Task:
+- Complete only the missing values in this JSON for each language.
+- Do NOT change any existing translations.
+- Do NOT skip any language or key.
+- Do NOT add extra languages or keys.
+- If a translation is unknown, leave it as "".
+- Return ONLY the completed JSON, as plain text, without any code blocks or explanation.
 
 Example:
 Input:
