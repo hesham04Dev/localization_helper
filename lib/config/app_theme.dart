@@ -18,6 +18,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
       selectedTileColor: accentColor.shade100,
       shape: ContinuousRectangleBorder(borderRadius:primaryBorderRadius)
     ),
+    
     dialogBackgroundColor: accentColor.shade100,
     tabBarTheme: const TabBarTheme(dividerColor: Colors.transparent),
     dropdownMenuTheme: DropdownMenuThemeData(
@@ -46,7 +47,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
         selectedItemColor: swatch.primary,
         selectedLabelStyle: TextStyle(color: swatch.primary)),
         drawerTheme: DrawerThemeData(
-           backgroundColor: Colors.black87,
+           backgroundColor: isDark?Colors.black87 : Colors.white,
            
            scrimColor: Colors.black45
         ),

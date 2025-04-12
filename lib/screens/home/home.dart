@@ -19,6 +19,7 @@ const Home({ super.key });
                   drawer: isLargeScreen ? null : const Drawer(
                     child: DrawerContent(),
                   ),
+                  
                   body: Row(
                     children: [
                       if (isLargeScreen)

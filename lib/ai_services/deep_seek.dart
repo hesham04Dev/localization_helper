@@ -1,10 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:localization_helper/aky.dart';
-import 'package:localization_helper/config/const.dart';
-import 'package:localization_helper/controller/prefs.dart';
-import 'package:localization_helper/fn/general.dart';
-import 'package:localization_lite/translate.dart';
 import 'ai_service.dart';
 
 class DeepSeekService extends AIService {

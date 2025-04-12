@@ -9,6 +9,8 @@ import 'package:localization_helper/screens/home/widgets/localization_dialog.dar
 import 'package:localization_helper/screens/settings/settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../../generated/icons.g.dart';
+
 class DrawerContent extends StatefulWidget {
   const DrawerContent({super.key});
 
@@ -30,7 +32,7 @@ class _DrawerContentState extends State<DrawerContent> {
           Row(
             children: [
               IconButton(
-                icon: AssetIcon("settings.png"),
+                icon: AssetIcon(AssetIcons.settings),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -82,14 +84,16 @@ class _DrawerContentState extends State<DrawerContent> {
       langTiles.add(
         LangTile(
           langCode: langCode,
-          isSelected: langCode == selectedLangCode, // Check if selected
+          isSelected: false,
+          // isSelected: langCode == selectedLangCode, // Check if selected
           onTap: () {
             setState(() {
-              if(selectedLangCode != langCode){
-              selectedLangCode = langCode; }
-              else{
-                selectedLangCode = null;
-              }
+              // if(selectedLangCode != langCode){
+              selectedLangCode = langCode;
+              // }
+              // else{
+              //   selectedLangCode = null;
+              // }
               context
                 .read<Localization>()
                 .dataManager

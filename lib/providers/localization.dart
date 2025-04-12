@@ -15,6 +15,8 @@ class LocalizationData {
   Map<String, Map<String, String>> data = {};
   Map<String, Map<String, String>> filteredData = {};
   Map<String, String> filters = {};
+  
+
   _getData([isFiltered = false]) {
     if (isFiltered) {
       return filteredData;
@@ -167,7 +169,9 @@ class Localization with ChangeNotifier {
   final LocalizationData dataManager = LocalizationData();
   final LocalizationFileManager fileManager = LocalizationFileManager();
   final LocalizationAIService _aiService = LocalizationAIService();
-
+  final homeController = TextEditingController();
+  final  homeFocusNode = FocusNode();
+  Map<String,String> homeControllerData ={};
   List<String> languages() => dataManager.languages();
   List<String> keys() => dataManager.keys();
 

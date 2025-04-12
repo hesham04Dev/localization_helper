@@ -12,11 +12,16 @@ class KeyCard extends StatefulWidget {
   final String localizationKey;
   final double minWidth;
 
-  const KeyCard({ super.key, required this.localizationKey, required this.minWidth });
+  const KeyCard({
+    super.key,
+    required this.localizationKey,
+    required this.minWidth,
+  });
 
   @override
   State<KeyCard> createState() => _KeyCardState();
 }
+
 late List<String> keyValues;
 
 class _KeyCardState extends State<KeyCard> {
@@ -25,43 +30,78 @@ class _KeyCardState extends State<KeyCard> {
 
   @override
   Widget build(BuildContext context) {
-    localizationInstance =context.read<Localization>();
-    keyValues = localizationInstance.dataManager.getKeyValues(widget.localizationKey,filtered: true);
-     return Column(
+    localizationInstance = context.read<Localization>();
+    keyValues = localizationInstance.dataManager.getKeyValues(
+      widget.localizationKey,
+      filtered: true,
+    );
+    return Column(
       mainAxisSize: MainAxisSize.min,
-       children: [
-         InkWell(
-          onDoubleTap: () async{
+      children: [
+        InkWell(
+          onDoubleTap: () async {
             //update the data without provider in this way
-            await  goTo(context,(context) => KeyPage(localizationKey: widget.localizationKey),);
-              setState(() { });
+            await goTo(
+              context,
+              (context) => KeyPage(localizationKey: widget.localizationKey),
+            );
+            setState(() {});
           },
-           child: ClickDetector(
-            onRightClick: (){
-              showUpdateDeleteKeyDialog(context, oldKey: widget.localizationKey);
+          child: ClickDetector(
+            onRightClick: () {
+              showUpdateDeleteKeyDialog(
+                context,
+                oldKey: widget.localizationKey,
+              );
             },
-            
+
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-              constraints: BoxConstraints(
-                minWidth: widget.minWidth
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              constraints: BoxConstraints(minWidth: widget.minWidth),
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: kAccentColor.withOpacity(0.2)))
+                border: Border(
+                  bottom: BorderSide(color: kAccentColor.withOpacity(0.2)),
+                ),
               ),
-              child: Row(mainAxisSize: MainAxisSize.min,
-                children: [SizedBox(width: 100, child:AutoSizeText(
-                  overflow: TextOverflow.ellipsis,
-                  minFontSize: kMinFontSize,
-                  widget.localizationKey)), ...List.generate(keyValues.length, (index) =>SizedBox(width: 100,
-                child: AutoSizeText(keyValues[index],minFontSize: kMinFontSize,maxLines: 1,overflow: TextOverflow.ellipsis,),
-              ) )],),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: AutoSizeText(
+                      overflow: TextOverflow.ellipsis,
+                      minFontSize: kMinFontSize,
+                      widget.localizationKey,
+                    ),
+                  ),
+                  ...List.generate(
+                    keyValues.length,
+                    (index) => SizedBox(
+                      width: 100,
+                      child: GestureDetector(
+                        onTap: (){
+                          
+                          context.read<Localization>().homeController.text = keyValues[index];
+                          context.read<Localization>().homeControllerData["lang"] = context.read<Localization>().languages()[index];
+                          context.read<Localization>().homeControllerData["key"] = widget.localizationKey;
+                          context.read<Localization>().homeFocusNode.requestFocus();
+
+                        },
+                        child: AutoSizeText(
+                          keyValues[index],
+                          minFontSize: kMinFontSize,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-               ),
-         ),
-          
-       ],
-     );
-  
+          ),
+        ),
+      ],
+    );
   }
 }

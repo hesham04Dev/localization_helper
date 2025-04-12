@@ -18,6 +18,7 @@ dependencies:
   flutter_color_utils: ^0.0.1
   google_generative_ai: 
   http: 
+  intl: ^0.20.2
   loader_overlay: ^5.0.0
   localization_lite: ^1.0.10
   provider: 

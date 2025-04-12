@@ -22,7 +22,7 @@ abstract class AIService {
   static late AIService model;
   String get name;
   late Map data;
-  static late final String apiKey;
+  static late String apiKey;
 
   static init(context) async {
     apiKey = Shared.prefs.getString("apiKey") ?? "";

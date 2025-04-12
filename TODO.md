@@ -22,20 +22,24 @@ If you're interested in contributing, here are some important tasks and improvem
 - [ ] **generate const keys notworks**
 - [x] **Add loader**: after each update
 - [ ] **save text edit**:in edit page add shortcut for save
-- [ ] **The search dialog is late**:update its shape and make it faster
-- [ ] **fix error in small screen**:the dark mode is activated in the sidebar even when it not activated
-- [ ]**store the last opened path**: re open it when open the app
-- [ ]**save unsaved files in temp location**: after a while or something
-- [ ]**show alert after saving**: saved correctly
+- [x] **The search dialog is late**:update its shape and make it faster
+- [x] **fix error in small screen**:the dark mode is activated in the sidebar even when it not activated
+- [-]**store the last opened path**: re open it when open the app
+- [-]**save unsaved files in temp location**: after a while or something
+- [-]**show alert after saving**: saved correctly
 - [x]**improve the way of getting the result**: find the ```json that end by ``` or find { end by } and get the result
 - [x]**fix infinite loading**: when there are an error in fetching
-- [ ]**ADD checking for translations**: add new file for the keys that have been checked in the langs
+- [=]**ADD checking for translations**: add new file for the keys that have been checked in the langs
 - [x]**remove cherry toast**:use toastification without context
 - [x]**re improve the code in the Ai Services**:use same way i remove gemini package and use same way in all sub classes and make the code shared
 - [x]**see why when generate in lang not works**
+- [-]**decrypt the api key**:
+- [ ]**use git in app**: for preventing data lose
+- [-]**re focus on the shortcuts**:after edit any thing re request focus
+
 
 ## To be tried
-- [ ] **remove the edit page and make it inline like excel**
+- [x] **remove the edit page and make it inline like excel**
 - [ ] **try to add the app feature to the localization_lite package**
 
 **Your contributions can make a significant impact. If you're ready to get started or have any questions, feel free to reach out!**
@@ -43,13 +47,13 @@ If you're interested in contributing, here are some important tasks and improvem
 
 
 ## For Package
- - [ ] add ai for localization lite or create new package - me
+ - [x] add ai for localization lite or create new package - me
  - [ ]  i think in this 
- - [ ] in debuging mode or in gen mode get key that called and get the translation of it in terminal (for non await)
+ - [x] in debuging mode or in gen mode get key that called and get the translation of it in terminal (for non await)
  if with await show the translation 
  add selected lang in the package
  i think i can alter the json file on the fly when we on the app?
- if cant save them in seprated file then after quit use a command to get them
+ if     
 
 
 

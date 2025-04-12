@@ -17,6 +17,7 @@ const String kCommonLangValuesPrompt = '''
 You are a translation assistant.
 
 Task:
+- Note you are translate this for application so you should use the correct translation that used in the app
 - Complete only the missing values in this JSON for each language.
 - Do NOT change any existing translations.
 - Do NOT skip any language or key.

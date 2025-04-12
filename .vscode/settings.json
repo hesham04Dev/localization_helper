@@ -2,5 +2,7 @@
     "cSpell.words": [
         "autofocus",
         "writeln"
-    ]
+    ],
+    "dart.flutterSdkPath": "C:\\Users\\hcody\\.puro\\envs\\stable\\flutter",
+    "dart.sdkPath": "C:\\Users\\hcody\\.puro\\envs\\stable\\flutter\\bin\\cache\\dart-sdk"
 }
