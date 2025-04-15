@@ -11,6 +11,7 @@ environment:
 dependencies:
   asset_icon: ^1.0.0
   auto_size_text: 
+  color_merge: ^1.0.1
   file_picker: 
   flutter:
     sdk: flutter

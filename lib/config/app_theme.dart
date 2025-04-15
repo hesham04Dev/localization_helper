@@ -1,4 +1,5 @@
 import 'package:asset_icon/asset_icon.dart';
+import 'package:color_merge/color_merge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_color_utils/flutter_color_utils.dart';
 import 'package:localization_helper/general_widgets/imageIcon.dart';
@@ -69,7 +70,7 @@ ThemeData buildTheme(MaterialColor accentColor, bool isDark) {
     ),
     dividerColor: accentColor,
     dialogTheme: DialogTheme(
-        backgroundColor: accentColor.withOpacity(0.2),
+        backgroundColor: accentColor.withOpacity(0.25).merge(isDark? Colors.black: Colors.white),
         barrierColor: isDark ? Colors.black26 : Colors.black12),
     iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(

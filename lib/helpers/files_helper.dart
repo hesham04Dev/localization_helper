@@ -5,6 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:localization_helper/controller/prefs.dart';
 import 'package:localization_helper/fn/general.dart';
 
+import '../config/const.dart';
+
 class LocalizationFileManager {
   String? path;
     _getPath() async {
@@ -23,6 +25,15 @@ class LocalizationFileManager {
       print('Saved $filePath');
     }
   }
+  Future<void> saveVerifiedTranslation(Map<String, List<String>> data) async {
+    final dir = Directory(await _getPath());
+    if (!await dir.exists()) await dir.create(recursive: true);
+
+    final filePath = '${dir.path}/verified_translation.json';
+    final jsonData = jsonEncode(data);
+    await File(filePath).writeAsString(jsonData);
+    print('Saved $filePath');
+  }
 
   Future<Map<String, Map<String, String>>> loadFromJson() async {
     final data = <String, Map<String, String>>{};
@@ -32,13 +43,34 @@ class LocalizationFileManager {
       for (var file in dir.listSync()) {
         if (file is File && file.path.endsWith('.json')) {
           final langCode = file.uri.pathSegments.last.split('.').first;
+          if(langCode.length > kMaxLangCodeLength) continue;
           final jsonString = await file.readAsString();
-          data[langCode] = Map<String, String>.from(jsonDecode(jsonString));
+          try{
+          data[langCode] = Map<String, String>.from(jsonDecode(jsonString));}
+          catch(e){
+            print("Error parsing JSON in file $file: $e");
+          }
         }
       }
     }
     return data;
   }
+ Future<Map<String, List<String>>> loadVerifiedTranslation() async {
+  final path = await _getPath();
+  final file = File('$path/verified_translation.json');
+
+  if (!await file.exists()) return {};
+
+  final data = await file.readAsString();
+  final rawMap = jsonDecode(data) as Map<String, dynamic>;
+
+  final verifiedTranslation = rawMap.map((key, value) {
+    final stringList = List<String>.from(value);
+    return MapEntry(key, stringList);
+  });
+
+  return verifiedTranslation;
+}
 
 Future<void> saveToDart(Map<String, Map<String, String>> data) async {
   // Check preferences for map and constant keys generation
@@ -105,6 +137,6 @@ String _toCamelCase(String key) {
       .split('_')
       .map((e) => e[0].toUpperCase() + e.substring(1).toLowerCase())
       .join()
-      .replaceFirstMapped(RegExp(r'^[A-Z]'), (match) => match[0]!.toLowerCase());
+      .replaceFirstMapped(RegExp(r'^[A-Z]'), (match) => match[0]!/*.toLowerCase()*/);
 }
 }

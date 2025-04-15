@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization_helper/providers/localization.dart';
+import 'package:localization_helper/widgets/verification_box.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../controller/shortcuts_controller.dart';
@@ -13,11 +14,9 @@ class InlineEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var localization = context.watch<Localization>();
-    return 
-    localization.homeControllerData.isEmpty
-        ? SizedBox(height: 34,)
-        :
-         SizedBox(
+    return localization.homeControllerData.isEmpty
+        ? SizedBox(height: 34)
+        : SizedBox(
           width: width,
           child: PrimaryContainer(
             // borderRadius: 5,
@@ -45,7 +44,10 @@ class InlineEdit extends StatelessWidget {
                     onSubmitted: (_) {
                       localization.homeController.text = "";
                       localization.homeControllerData = {};
-                      context.read<ShortcutsController>().focusNode.requestFocus();
+                      context
+                          .read<ShortcutsController>()
+                          .focusNode
+                          .requestFocus();
                       localization.notify();
                     },
                     style: const TextStyle(fontSize: 13),
@@ -58,6 +60,7 @@ class InlineEdit extends StatelessWidget {
                     ),
                   ),
                 ),
+                VerificationBox(langCode:localization.homeControllerData["lang"]??"" ,translationKey: localization.homeControllerData["key"]??"",)
               ],
             ),
           ),

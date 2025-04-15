@@ -29,16 +29,16 @@ If you're interested in contributing, here are some important tasks and improvem
 - [-]**show alert after saving**: saved correctly
 - [x]**improve the way of getting the result**: find the ```json that end by ``` or find { end by } and get the result
 - [x]**fix infinite loading**: when there are an error in fetching
-- [=]**ADD checking for translations**: add new file for the keys that have been checked in the langs
+- [x]**ADD checking for translations**: add new file for the keys that have been checked in the langs
 - [x]**remove cherry toast**:use toastification without context
 - [x]**re improve the code in the Ai Services**:use same way i remove gemini package and use same way in all sub classes and make the code shared
 - [x]**see why when generate in lang not works**
 - [-]**decrypt the api key**:
 - [ ]**use git in app**: for preventing data lose
-- [-]**re focus on the shortcuts**:after edit any thing re request focus
+- [x]**re focus on the shortcuts**:after edit any thing re request focus
 - [x]**fix when search the langs apears**
 - [x]**The type bar not working correctly**:dont use index , also thier ar an err in another thing?
-
+- [x]**remove the transparency form dialogs**:the text cant be read clearly
 
 
 ## To be tried

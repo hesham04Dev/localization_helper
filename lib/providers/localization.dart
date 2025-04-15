@@ -14,6 +14,7 @@ import 'package:localization_lite/translate.dart';
 class LocalizationData {
   Map<String, Map<String, String>> data = {};
   Map<String, Map<String, String>> filteredData = {};
+  Map<String,List<String>> verifiedTranslation = {};
   Map<String, String> filters = {};
   
 
@@ -144,6 +145,22 @@ class LocalizationData {
                 : maxEntry)
         .key;
   }
+
+  void toggleVerifiedTranslation({required String langCode,required String key}) {
+    if (verifiedTranslation.containsKey(key)) {
+      if(verifiedTranslation[key]!.contains(langCode)){
+        verifiedTranslation[key]?.remove(langCode);
+      }else{
+        verifiedTranslation[key]?.add(langCode);
+      }
+    }else{
+      verifiedTranslation[key] = [langCode];
+    }
+  }
+
+  bool isVerifiedTranslation({required String langCode,required String key}) {
+    return verifiedTranslation[key]?.contains(langCode) ?? false;
+  }
 }
 
 class LocalizationAIService {
@@ -181,6 +198,10 @@ class Localization with ChangeNotifier {
   List<String> keys() => dataManager.keys();
 
   Future<void> addKey(String key) async {
+    if(dataManager.keys().contains(key)){
+      errorToast(tr("keyExists"));
+      return;
+    }
     dataManager.addKey(key);
     dataManager.updateFilter();
     notifyListeners();
@@ -217,6 +238,10 @@ class Localization with ChangeNotifier {
   }
 
   Future<void> addLanguage(String langCode, {notify = true}) async {
+    if(dataManager.languages().contains(langCode)){
+      errorToast("${tr("langExists")} ");
+      return;
+    }
     dataManager.addLang(langCode);
     dataManager.updateFilter();
     if (notify) notifyListeners();
@@ -224,10 +249,12 @@ class Localization with ChangeNotifier {
 
   Future<void> saveToJson() async {
     await fileManager.saveToJson(dataManager.data);
+    await fileManager.saveVerifiedTranslation(dataManager.verifiedTranslation);
   }
 
   Future<void> loadFromJson() async {
     dataManager.data = await fileManager.loadFromJson();
+    dataManager.verifiedTranslation = await fileManager.loadVerifiedTranslation();
     dataManager.checkDefaultLang();
     dataManager.updateFilter();
     notifyListeners();
@@ -311,5 +338,6 @@ class Localization with ChangeNotifier {
     // print(dataManager.data);
     notifyListeners();
   }
+
 
 }

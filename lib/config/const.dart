@@ -60,6 +60,7 @@ Here is the JSON data that requires completion:
 const double kDrawerWidth = 200;
 const double kLargeScreenWidth = 800;
 const double kLanguageWidth =100;
+const int kMaxLangCodeLength = 5;
 
 
 final primaryBorderRadius = BorderRadius.circular(45); /*not used*/

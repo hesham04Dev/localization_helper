@@ -89,6 +89,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.1"
+  color_merge:
+    dependency: "direct main"
+    description:
+      name: color_merge
+      sha256: "1e435ae8aca36d314562e18c58e1c107e6129b953d6396ea5000fa3d21a5630a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   console:
     dependency: transitive
     description:
