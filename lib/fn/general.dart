@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
+import 'package:localization_helper/controller/shortcuts_controller.dart';
 import 'package:localization_helper/generated/icons.g.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/screens/home/widgets/shortcuts.dart';
@@ -19,6 +20,7 @@ Future<void> openFolder(BuildContext context) async {
   if (result != null && result.isNotEmpty) {
     context.read<Localization>().fileManager.path = result;
     context.read<Localization>().loadFromJson();
+    
   }
   //  shortcutsFocus.requestFocus();
 }

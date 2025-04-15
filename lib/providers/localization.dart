@@ -17,7 +17,7 @@ class LocalizationData {
   Map<String, String> filters = {};
   
 
-  _getData([isFiltered = false]) {
+  _getData([isFiltered = true]) {
     if (isFiltered) {
       return filteredData;
     }
@@ -78,14 +78,19 @@ class LocalizationData {
 
   void filterByKey(String key) {
     filters["keyFilter"] = key;
-    filteredData = {for (var lang in languages()) lang: {}};
+    var langs = languages();
+    if(filters["langFilter"]?.isNotEmpty??false){
+      langs = [filters["langFilter"]!];
+    }
+
+    filteredData = {for (var lang in langs) lang: {}};
     final similarKeys = data[defaultLang()]
             ?.keys
             .where((element) => element.contains(key))
             .toList(growable: false) ??
         [];
 
-    for (var lang in languages()) {
+    for (var lang in langs) {
       final languageData = filteredData[lang]!;
       for (var key in similarKeys) {
         languageData[key] = data[lang]?[key] ?? "";
@@ -172,7 +177,7 @@ class Localization with ChangeNotifier {
   final homeController = TextEditingController();
   final  homeFocusNode = FocusNode();
   Map<String,String> homeControllerData ={};
-  List<String> languages() => dataManager.languages();
+  List<String> languages({bool filtered = true}) => dataManager.languages(filtered: filtered);
   List<String> keys() => dataManager.keys();
 
   Future<void> addKey(String key) async {

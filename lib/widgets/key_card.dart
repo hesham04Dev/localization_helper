@@ -76,25 +76,29 @@ class _KeyCardState extends State<KeyCard> {
                   ),
                   ...List.generate(
                     keyValues.length,
-                    (index) => SizedBox(
+                    (index) {
+                      final String value = keyValues[index];
+                      return SizedBox(
                       width: 100,
                       child: GestureDetector(
                         onTap: (){
                           
-                          context.read<Localization>().homeController.text = keyValues[index];
+                          context.read<Localization>().homeController.text = value;
                           context.read<Localization>().homeControllerData["lang"] = context.read<Localization>().languages()[index];
                           context.read<Localization>().homeControllerData["key"] = widget.localizationKey;
                           context.read<Localization>().homeFocusNode.requestFocus();
-
+                          context.read<Localization>().notify();
+                    
                         },
                         child: AutoSizeText(
-                          keyValues[index],
+                          value,
                           minFontSize: kMinFontSize,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ),
+                    );
+                    },
                   ),
                 ],
               ),

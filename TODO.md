@@ -16,7 +16,7 @@ If you're interested in contributing, here are some important tasks and improvem
 - [x] **Project Name Change**: Update the app's name to "Treefy".
 - [x] **Logo Creation**: Design a logo using an image of a tree for a more fitting visual identity.
 - [ ] **Bug Open Folder**: See why when open folder using shortcuts make it stop working
-- [ ] **Update Prombt**: Add in it give me the best result used in the Application interfaces
+- [x] **Update Prompt**: Add in it give me the best result used in the Application interfaces
 - [x] **Update icons**: the open folder ,save,back not good
 - [ ] **Update Naming**: the generate on key,card not clear
 - [ ] **generate const keys notworks**
@@ -36,6 +36,9 @@ If you're interested in contributing, here are some important tasks and improvem
 - [-]**decrypt the api key**:
 - [ ]**use git in app**: for preventing data lose
 - [-]**re focus on the shortcuts**:after edit any thing re request focus
+- [x]**fix when search the langs apears**
+- [x]**The type bar not working correctly**:dont use index , also thier ar an err in another thing?
+
 
 
 ## To be tried

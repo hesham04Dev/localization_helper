@@ -4,6 +4,7 @@ import 'package:localization_helper/ai_services/ai_service.dart';
 import 'package:localization_helper/config/app_theme.dart';
 import 'package:localization_helper/config/const.dart';
 import 'package:localization_helper/controller/prefs.dart';
+import 'package:localization_helper/controller/shortcuts_controller.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_helper/providers/theme_provider.dart';
 import 'package:localization_helper/screens/home/home.dart';
@@ -22,6 +23,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create:(_)=> ThemeProvider()),
       ChangeNotifierProvider(create: (_) => Localization()),
+      Provider(create: (_)=> ShortcutsController())
     ],
     child: const MyApp(),
   ));

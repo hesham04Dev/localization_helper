@@ -5,6 +5,8 @@ import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
 import 'package:localization_helper/general_widgets/imageIcon.dart';
 import 'package:localization_helper/providers/localization.dart';
+import 'package:localization_helper/screens/home/widgets/autoDirectionTextField.dart';
+import 'package:localization_helper/screens/home/widgets/home_body_widgets/inline_edit.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
 import 'package:localization_helper/screens/home/widgets/search_field.dart';
 import 'package:localization_helper/widgets/key_card.dart';
@@ -45,21 +47,14 @@ class HomeBody extends StatelessWidget {
     var minCardWidth = getMinWidth();
     String? langFilter =
         context.read<Localization>().dataManager.filters["langFilter"];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppBar(
           // refresh the home if the size of screen changed to show the menu or hide it
-          leading:langFilter?.isNotEmpty ?? false ? IconButton(onPressed: (){
-             context
-                .read<Localization>()
-                .dataManager
-                .filterByLang("");
-            context.read<Localization>().notify();
-          }, icon: AssetIcon(AssetIcons.refresh)):SizedBox(),
           title: Text(tr("home")),
           actions: [
-            
             SearchField(),
             if (langFilter?.isNotEmpty ?? false)
               IconButton(
@@ -67,6 +62,14 @@ class HomeBody extends StatelessWidget {
                   context.read<Localization>().generateLangValues(langFilter!);
                 },
                 icon: AssetIcon(AssetIcons.magic),
+              ),
+            if (langFilter?.isNotEmpty ?? false)
+              IconButton(
+                onPressed: () {
+                  context.read<Localization>().dataManager.filterByLang("");
+                  context.read<Localization>().notify();
+                },
+                icon: AssetIcon(AssetIcons.refresh),
               ),
             IconButton(
               icon: AssetIcon("add.svg", size: 25),
@@ -76,49 +79,7 @@ class HomeBody extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          width: getMinWidth(),
-          child: PrimaryContainer(
-            // borderRadius: 5,
-            margin: 2,
-            padding: 1,
-            child: Row(
-              children: [
-                //  localization
-                //               .homeController.text != ""?IconButton(onPressed: (){
-                //                 localization.homeController.text = "";
-                //               localization.homeControllerData = {};
-                //               }, icon: AssetIcon(AssetIcons.close,size:20)):SizedBox(),
-                Expanded(
-                  child: TextField(
-                    focusNode: context.read<Localization>().homeFocusNode,
-                    controller: context.read<Localization>().homeController,
-                    onChanged: (value) {
-                      localization.dataManager.data[localization
-                              .homeControllerData["lang"]]?[localization
-                                  .homeControllerData["key"] ??
-                              ""] =
-                          value;
-                      localization.notify();
-                    },
-                    onSubmitted: (_) {
-                      localization.homeController.text = "";
-                      localization.homeControllerData = {};
-                    },
-                    style: const TextStyle(fontSize: 13),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 12,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        InlineEdit(width: getMinWidth()),
         Scrollbar(
           thumbVisibility: true,
           controller: horizontalController,

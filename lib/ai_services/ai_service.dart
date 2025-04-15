@@ -81,9 +81,9 @@ abstract class AIService {
   }
 
   Future<String> _sendRequest(String prompt) async {
-    final apiKey = Shared.prefs.getString("apiKey") ?? "";
+    // final apiKey = Shared.prefs.getString("apiKey") ?? "";
 
-    final response = await getResponse(prompt);
+    final http.Response response = await getResponse(prompt);
 
     if (response.statusCode == 200) {
       data = jsonDecode(response.body);
@@ -95,22 +95,7 @@ abstract class AIService {
   }
 
   String removeMdJson(String content) {
-    // Try to extract content between ```json and ```
-    final jsonCodeBlockPattern = RegExp(r'```json\s*([\s\S]*?)\s*```');
-    final codeBlockPattern = RegExp(r'```\s*([\s\S]*?)\s*```');
-    final jsonPattern = RegExp(r'\{[\s\S]*?\}');
-
-    final matchJsonBlock = jsonCodeBlockPattern.firstMatch(content);
-    if (matchJsonBlock != null) {
-      return matchJsonBlock.group(1)!.trim();
-    }
-
-    // Fallback: extract content between ``` and ```
-    final matchCodeBlock = codeBlockPattern.firstMatch(content);
-    if (matchCodeBlock != null) {
-      return matchCodeBlock.group(1)!.trim();
-    }
-
+    content.replaceAll("```json", "").replaceAll("```", "");
     int startIndex = content.indexOf('{');
     int endIndex = content.lastIndexOf('}');
 

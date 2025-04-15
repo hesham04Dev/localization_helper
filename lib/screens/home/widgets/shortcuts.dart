@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:localization_helper/controller/shortcuts_controller.dart';
 import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/screens/home/intents/intents.dart';
 import 'package:localization_helper/screens/home/widgets/localization_dialog.dart';
 import 'package:localization_helper/screens/settings/settings.dart';
+import 'package:provider/provider.dart';
 
 // var shortcutsFocus = FocusNode();
 
@@ -59,6 +61,7 @@ class ShortcutsLayer extends StatelessWidget {
           // })
         },
         child: Focus(
+          focusNode: context.read<ShortcutsController>().focusNode,
             autofocus:
                 true, // Ensure the Focus widget can capture keyboard input
               // canRequestFocus: true,

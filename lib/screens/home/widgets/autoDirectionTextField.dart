@@ -4,19 +4,25 @@ import 'AutoDirection.dart';
 
 class AutoDirectionTextField extends StatefulWidget {
   final TextEditingController controller;
-  final Map<String, String> locale;
   final String? hintText;
   final bool isUnderLinedBorder;
   final int? maxLines;
   final TextStyle? style;
+  final InputDecoration? decoration;
+  final FocusNode? focusNode;
+  final Function(String value)? onChanged;
+  final Function(String value)? onSubmitted;
 
   const AutoDirectionTextField(
       {super.key,
       required this.controller,
-      required this.locale,
       this.hintText,
       this.isUnderLinedBorder = true,
       this.maxLines = 1,
+      this.decoration,
+      this.focusNode,
+      this.onChanged,
+      this.onSubmitted,
       this.style});
 
   @override
@@ -32,15 +38,18 @@ class _AutoDirectionTextFormFieldState extends State<AutoDirectionTextField> {
           ? widget.controller.text[0]
           : widget.controller.text,
       child: TextField(
+        focusNode: widget.focusNode,
+        onSubmitted: (value) {
+          widget.onSubmitted?.call(value);
+        },
+        
         maxLines: widget.maxLines,
         controller: widget.controller,
         onChanged: (value) {
+          widget.onChanged?.call(value);
           setState(() {});
         },
-        decoration: InputDecoration(
-            hintText:
-                widget.hintText == null ? "" : widget.locale[widget.hintText]!,
-            border: widget.isUnderLinedBorder ? null : InputBorder.none),
+        decoration: widget.decoration,
         style: widget.style,
       ),
     );

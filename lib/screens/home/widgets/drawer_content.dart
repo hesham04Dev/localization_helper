@@ -80,7 +80,7 @@ class _DrawerContentState extends State<DrawerContent> {
 
   List<Widget> generateLangsTiles(BuildContext context) {
     List<Widget> langTiles = [];
-    for (var langCode in context.watch<Localization>().languages()) {
+    for (var langCode in context.watch<Localization>().languages(filtered:false)) {
       langTiles.add(
         LangTile(
           langCode: langCode,
