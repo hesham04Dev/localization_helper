@@ -59,7 +59,7 @@ class HomeBody extends StatelessWidget {
             if (langFilter?.isNotEmpty ?? false)
               IconButton(
                 onPressed: () {
-                  context.read<Localization>().generateLangValues(langFilter!);
+                  context.read<Localization>().generateLangValues(langFilter!,true);
                 },
                 icon: AssetIcon(AssetIcons.magic),
               ),

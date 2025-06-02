@@ -39,6 +39,18 @@ If you're interested in contributing, here are some important tasks and improvem
 - [x]**fix when search the langs apears**
 - [x]**The type bar not working correctly**:dont use index , also thier ar an err in another thing?
 - [x]**remove the transparency form dialogs**:the text cant be read clearly
+- [=] **fix over filling**: if value have data prevent ai from refill it with new value
+- [=] **add switch for auto generate in inline edit**: when press enter it auto generate generate content
+- [x] fix bug in key_page when filtered
+- [ ] support more langs(gen const keys,map);
+
+
+new names for switches
+Auto-generate content on key creation: (For "Auto Generate on Key")
+Auto-generate language values on language addition: (For "Auto Generate on Lang")
+Auto-fill missing content on Edit page: (For "Auto Generate on Card")
+
+Auto generate missing value on Inline edit
 
 
 ## To be tried
@@ -51,12 +63,80 @@ If you're interested in contributing, here are some important tasks and improvem
 
 ## For Package
  - [x] add ai for localization lite or create new package - me
- - [ ]  i think in this 
  - [x] in debuging mode or in gen mode get key that called and get the translation of it in terminal (for non await)
  if with await show the translation 
  add selected lang in the package
  i think i can alter the json file on the fly when we on the app?
  if     
+
+
+
+
+## do tests
+ [x] no internet call 
+ [ ] lang exists
+ [ ] fix the lang exists in generate in lang
+ [ ] need time out in online request 30 sec
+ [ ] 
+ ## test package 
+ [x] add lang
+ [x] select custom lang
+ [x] generate
+ [ ]
+
+ ## test site
+ new trans
+ new user
+ new porj
+ - multi verify
+ - 1 verify
+ - free proj
+ - paid project
+- verify by trans
+- view verifications
+- edit proj
+- export
+- disapble
+- purchase points
+- sell point (no account) with accoutn
+
+- request lang
+- reject
+
+- accept request
+
+
+[ ] record video for each part
+
+[ ] build the powerpoint
+[ ] build the report 25%
+[ ] power for stage
+[ ] rep for sate 30% 
+
+
+
+
+
+## done tests
+ package
+  [x] gather keys (gather for the base lang only why)
+  [x] high error in the package cant get the supported langs and i dont know what to do keep it right now
+  [x] init 
+  [x] add lang
+  [x] gemini no internet
+  [ ] can added modes save after each word or add code to save i think with code is better
+  [x] gemini with internet not working as needed
+
+  [ ] clean the code of the package before presentation
+ re test 
+    [ ] gemini
+
+## desktop app
+    [x] fix lang exists 
+    [x] fix key exists
+    [x] no internet 
+
+
 
 
 

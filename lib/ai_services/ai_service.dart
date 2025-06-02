@@ -73,18 +73,23 @@ abstract class AIService {
     $kCommonKeyValuesPrompt
     ${jsonEncode(keysAndValues)}
     ''';
-
+    var result;
     final values = await _sendRequest(prompt);
-    final result = removeMdJson(values);
+    result = removeMdJson(values);
     context.loaderOverlay.hide();
     return result;
   }
 
   Future<String> _sendRequest(String prompt) async {
-    // final apiKey = Shared.prefs.getString("apiKey") ?? "";
 
-    final http.Response response = await getResponse(prompt);
-
+    late final http.Response response;
+    try {
+       response = await getResponse(prompt);
+    } catch (e) {
+      print("error $e");
+      errorToast(tr("Error"));
+      return "{}";
+    }
     if (response.statusCode == 200) {
       data = jsonDecode(response.body);
       return getResult() ?? "{}";

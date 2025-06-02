@@ -19,12 +19,12 @@ class _KeyPageState extends State<KeyPage> {
   @override
   Widget build(BuildContext context) {
     var localizationInstance = context.read<Localization>();
-    var langs = localizationInstance.languages();
+    var langs = localizationInstance.languages(filtered: false);
     var keyValues = localizationInstance.dataManager.getKeyValues(
       widget.localizationKey,
     );
     List controllers = List.generate(
-      langs.length,
+      keyValues.length,
       (index) => TextEditingController(text: keyValues[index]),
     );
 

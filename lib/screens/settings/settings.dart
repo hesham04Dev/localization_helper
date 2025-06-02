@@ -189,22 +189,22 @@ class _SettingsState extends State<Settings> {
                   title: Text("${tr("autoGenerate")} ${tr("onCard")}"),
                   value: autoGenerateOnCard,
                 ),
-                generateSwitchList(
-                  onChanged: (value) async {
-                    await Shared.prefs.setBool("generateMap", value);
-                    setState(() {});
-                  },
-                  title: Text(tr("generateMap")),
-                  value: generateMap,
-                ),
-                generateSwitchList(
-                  onChanged: (value) async {
-                    await Shared.prefs.setBool("generateConstKeys", value);
-                    setState(() {});
-                  },
-                  title: Text(tr("generateConstKeys")),
-                  value: generateConstKeys,
-                ),
+                // generateSwitchList(
+                //   onChanged: (value) async {
+                //     await Shared.prefs.setBool("generateMap", value);
+                //     setState(() {});
+                //   },
+                //   title: Text(tr("generateMap")),
+                //   value: generateMap,
+                // ),
+                // generateSwitchList(
+                //   onChanged: (value) async {
+                //     await Shared.prefs.setBool("generateConstKeys", value);
+                //     setState(() {});
+                //   },
+                //   title: Text(tr("generateConstKeys")),
+                //   value: generateConstKeys,
+                // ),
               ],
             ),
           ],

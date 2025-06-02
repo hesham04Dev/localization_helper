@@ -237,14 +237,16 @@ class Localization with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addLanguage(String langCode, {notify = true}) async {
+  Future<bool> addLanguage(String langCode, {notify = true}) async {
+    // return true if lang added exists
     if(dataManager.languages().contains(langCode)){
       errorToast("${tr("langExists")} ");
-      return;
+      return false;
     }
     dataManager.addLang(langCode);
     dataManager.updateFilter();
     if (notify) notifyListeners();
+    return true;
   }
 
   Future<void> saveToJson() async {
@@ -265,13 +267,20 @@ class Localization with ChangeNotifier {
   }
 
   Future<void> generateKeyValues(String key) async {
+    if(dataManager.keys().contains(key)){
+      errorToast("${tr("keyExists")} ");
+      return ;
+    }
     Map<String,String> param = {};
     param["key"] = key;
     param.addAll({
       for (var lang in languages()) lang: dataManager.data[lang]?[key] ?? ""
     });
-
     var result = await _aiService.fetchKeyValues(param);
+     result.forEach((lang, value) {
+      dataManager.data[lang]?[key] = value;
+    });
+  
     result.forEach((lang, value) {
       dataManager.data[lang]?[key] = value;
     });
@@ -314,8 +323,10 @@ class Localization with ChangeNotifier {
     notify();
   }
 
-  void generateLangValues(String langCode) async {
-    addLanguage(langCode, notify: false);
+  Future<void> generateLangValues(String langCode, [bool forComplete = false]) async {
+    if(!forComplete){
+    bool isAdded = await addLanguage(langCode, notify: false);
+    if(!isAdded) return;}
     Map<String, Map<String, String>> param = {};
     
     param.addAll({defaultLang(): dataManager.data[defaultLang()]!});

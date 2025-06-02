@@ -2,7 +2,7 @@ name: localization_helper
 description: "AI Localization Assistant"
 publish_to: 'none' 
 
-version: 0.8.0+1
+version: 0.9.2+2
 
 environment:
   sdk: ">=3.7.0 <4.0.0"
@@ -47,6 +47,6 @@ msix_config:
   display_name: Treefy
   publisher_display_name: Hcody
   identity_name: hcody.hesham.treefy
-  msix_version: 0.8.1.0
+  msix_version: 0.9.5.0
   logo_path: C:\Users\hcody\Downloads\treefyLogo.png
   capabilities: internetClient,
