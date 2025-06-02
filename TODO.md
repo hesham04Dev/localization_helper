@@ -33,16 +33,17 @@ If you're interested in contributing, here are some important tasks and improvem
 - [x]**remove cherry toast**:use toastification without context
 - [x]**re improve the code in the Ai Services**:use same way i remove gemini package and use same way in all sub classes and make the code shared
 - [x]**see why when generate in lang not works**
-- [-]**decrypt the api key**:
+- [-]~~**decrypt the api key**:~~
 - [ ]**use git in app**: for preventing data lose
 - [x]**re focus on the shortcuts**:after edit any thing re request focus
 - [x]**fix when search the langs apears**
 - [x]**The type bar not working correctly**:dont use index , also thier ar an err in another thing?
 - [x]**remove the transparency form dialogs**:the text cant be read clearly
-- [=] **fix over filling**: if value have data prevent ai from refill it with new value
+- [x] **fix over filling**: if value have data prevent ai from refill it with new value
 - [=] **add switch for auto generate in inline edit**: when press enter it auto generate generate content
 - [x] fix bug in key_page when filtered
 - [ ] support more langs(gen const keys,map);
+- [ ] error in updating key (i think with filtered)
 
 
 new names for switches

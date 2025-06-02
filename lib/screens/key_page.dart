@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localization_helper/controller/prefs.dart';
+import 'package:localization_helper/fn/general.dart';
 import 'package:localization_helper/general_widgets/PrimaryContainer.dart';
 import 'package:localization_helper/providers/localization.dart';
 import 'package:localization_lite/translate.dart';
@@ -29,6 +30,10 @@ class _KeyPageState extends State<KeyPage> {
     );
 
     generateKeyCard() async {
+      if(controllers.every((input) => !input.text.isEmpty)) {
+        errorToast(tr("all_have_values"));
+        return;
+      }
       var param = {"key": widget.localizationKey};
       for (int i = 0; i < controllers.length; i++) {
         param[langs[i]] = controllers[i].text;
@@ -36,6 +41,7 @@ class _KeyPageState extends State<KeyPage> {
       await localizationInstance.generateCardValues(param);
       final data = localizationInstance.dataManager.data;
       for (int i = 0; i < controllers.length; i++) {
+        if(!controllers[i].text.isEmpty) continue; 
         controllers[i].text = data[langs[i]]?[widget.localizationKey];
       }
       setState(() {});

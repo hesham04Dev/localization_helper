@@ -14,9 +14,8 @@ import 'package:localization_lite/translate.dart';
 class LocalizationData {
   Map<String, Map<String, String>> data = {};
   Map<String, Map<String, String>> filteredData = {};
-  Map<String,List<String>> verifiedTranslation = {};
+  Map<String, List<String>> verifiedTranslation = {};
   Map<String, String> filters = {};
-  
 
   _getData([isFiltered = true]) {
     if (isFiltered) {
@@ -45,9 +44,9 @@ class LocalizationData {
 
   List<String> getKeyValues(String key, {filtered = false}) {
     // print(filteredData);
-    return languages(filtered: filtered)
-        .map((lang) => data[lang]?[key] ?? "")
-        .toList();
+    return languages(
+      filtered: filtered,
+    ).map((lang) => data[lang]?[key] ?? "").toList();
   }
 
   void addKey(String key) {
@@ -80,13 +79,13 @@ class LocalizationData {
   void filterByKey(String key) {
     filters["keyFilter"] = key;
     var langs = languages();
-    if(filters["langFilter"]?.isNotEmpty??false){
+    if (filters["langFilter"]?.isNotEmpty ?? false) {
       langs = [filters["langFilter"]!];
     }
 
     filteredData = {for (var lang in langs) lang: {}};
-    final similarKeys = data[defaultLang()]
-            ?.keys
+    final similarKeys =
+        data[defaultLang()]?.keys
             .where((element) => element.contains(key))
             .toList(growable: false) ??
         [];
@@ -139,32 +138,37 @@ class LocalizationData {
     }
 
     return data.entries
-        .reduce((maxEntry, currentEntry) =>
-            currentEntry.value.length > maxEntry.value.length
-                ? currentEntry
-                : maxEntry)
+        .reduce(
+          (maxEntry, currentEntry) =>
+              currentEntry.value.length > maxEntry.value.length
+                  ? currentEntry
+                  : maxEntry,
+        )
         .key;
   }
 
-  void toggleVerifiedTranslation({required String langCode,required String key}) {
+  void toggleVerifiedTranslation({
+    required String langCode,
+    required String key,
+  }) {
     if (verifiedTranslation.containsKey(key)) {
-      if(verifiedTranslation[key]!.contains(langCode)){
+      if (verifiedTranslation[key]!.contains(langCode)) {
         verifiedTranslation[key]?.remove(langCode);
-      }else{
+      } else {
         verifiedTranslation[key]?.add(langCode);
       }
-    }else{
+    } else {
       verifiedTranslation[key] = [langCode];
     }
   }
 
-  bool isVerifiedTranslation({required String langCode,required String key}) {
+  bool isVerifiedTranslation({required String langCode, required String key}) {
     return verifiedTranslation[key]?.contains(langCode) ?? false;
   }
 }
 
 class LocalizationAIService {
-  Future<Map<String, String>> fetchKeyValues( Map<String, String> param) async {
+  Future<Map<String, String>> fetchKeyValues(Map<String, String> param) async {
     try {
       var aiResponse = await AIService.model.getKeyValues(param);
       return Map<String, String>.from(jsonDecode(aiResponse));
@@ -176,7 +180,9 @@ class LocalizationAIService {
   }
 
   Future<Map<String, Map<String, String>>> fetchLangValues(
-      String langCode, Map<String, Map<String, String>> param) async {
+    String langCode,
+    Map<String, Map<String, String>> param,
+  ) async {
     try {
       var aiResponse = await AIService.model.getLangValues(param);
       return Map<String, Map<String, String>>.from(jsonDecode(aiResponse));
@@ -192,13 +198,14 @@ class Localization with ChangeNotifier {
   final LocalizationFileManager fileManager = LocalizationFileManager();
   final LocalizationAIService _aiService = LocalizationAIService();
   final homeController = TextEditingController();
-  final  homeFocusNode = FocusNode();
-  Map<String,String> homeControllerData ={};
-  List<String> languages({bool filtered = true}) => dataManager.languages(filtered: filtered);
+  final homeFocusNode = FocusNode();
+  Map<String, String> homeControllerData = {};
+  List<String> languages({bool filtered = true}) =>
+      dataManager.languages(filtered: filtered);
   List<String> keys() => dataManager.keys();
 
   Future<void> addKey(String key) async {
-    if(dataManager.keys().contains(key)){
+    if (dataManager.keys().contains(key)) {
       errorToast(tr("keyExists"));
       return;
     }
@@ -239,7 +246,7 @@ class Localization with ChangeNotifier {
 
   Future<bool> addLanguage(String langCode, {notify = true}) async {
     // return true if lang added exists
-    if(dataManager.languages().contains(langCode)){
+    if (dataManager.languages().contains(langCode)) {
       errorToast("${tr("langExists")} ");
       return false;
     }
@@ -256,7 +263,8 @@ class Localization with ChangeNotifier {
 
   Future<void> loadFromJson() async {
     dataManager.data = await fileManager.loadFromJson();
-    dataManager.verifiedTranslation = await fileManager.loadVerifiedTranslation();
+    dataManager.verifiedTranslation =
+        await fileManager.loadVerifiedTranslation();
     dataManager.checkDefaultLang();
     dataManager.updateFilter();
     notifyListeners();
@@ -267,20 +275,20 @@ class Localization with ChangeNotifier {
   }
 
   Future<void> generateKeyValues(String key) async {
-    if(dataManager.keys().contains(key)){
+    if (dataManager.keys().contains(key)) {
       errorToast("${tr("keyExists")} ");
-      return ;
+      return;
     }
-    Map<String,String> param = {};
+    Map<String, String> param = {};
     param["key"] = key;
     param.addAll({
-      for (var lang in languages()) lang: dataManager.data[lang]?[key] ?? ""
+      for (var lang in languages()) lang: dataManager.data[lang]?[key] ?? "",
     });
     var result = await _aiService.fetchKeyValues(param);
-     result.forEach((lang, value) {
+    result.forEach((lang, value) {
       dataManager.data[lang]?[key] = value;
     });
-  
+
     result.forEach((lang, value) {
       dataManager.data[lang]?[key] = value;
     });
@@ -295,7 +303,7 @@ class Localization with ChangeNotifier {
     try {
       decoded = jsonDecode(aiResponse);
     } catch (e) {
-        errorToast(tr("aiFailedToResponse"));
+      errorToast(tr("aiFailedToResponse"));
       return;
     }
     decoded.forEach((key, value) {
@@ -323,32 +331,70 @@ class Localization with ChangeNotifier {
     notify();
   }
 
-  Future<void> generateLangValues(String langCode, [bool forComplete = false]) async {
-    if(!forComplete){
-    bool isAdded = await addLanguage(langCode, notify: false);
-    if(!isAdded) return;}
+  // Future<void> generateLangValues(String langCode, [bool forComplete = false]) async {
+  //   if(!forComplete){
+  //   bool isAdded = await addLanguage(langCode, notify: false);
+  //   if(!isAdded) return;}
+  //   Map<String, Map<String, String>> param = {};
+
+  //   param.addAll({defaultLang(): dataManager.data[defaultLang()]!});
+  //   param.addAll({langCode: dataManager.data[langCode]!});
+
+  //   Map<String, Map<String, String>> result = {};
+  //   var aiResponse = await GeminiService().getLangValues(param);
+  //   Map decoded;
+  //   try {
+  //     decoded = jsonDecode(aiResponse);
+  //   } catch (e) {
+  //      errorToast(tr("aiFailedToResponse"));
+  //     return;
+  //   }
+  //   decoded.forEach((key, value) {
+  //     result[key] = Map<String, String>.from(value);
+  //   });
+
+  //   dataManager.data[langCode] = result[langCode] ?? {};
+  //   // print(dataManager.data);
+  //   notifyListeners();
+  // }
+
+  Future<void> generateLangValues(
+    String langCode, [
+    bool forComplete = false,
+  ]) async {
+    if (!forComplete) {
+      bool isAdded = await addLanguage(langCode, notify: false);
+      if (!isAdded) return;
+    }
     Map<String, Map<String, String>> param = {};
-    
+    if(dataManager.data[langCode]?.values.every((value) => value.trim() != "") ?? false){
+      errorToast(tr("all_have_values"));
+      return;
+    }
     param.addAll({defaultLang(): dataManager.data[defaultLang()]!});
     param.addAll({langCode: dataManager.data[langCode]!});
 
-    Map<String, Map<String, String>> result = {};
+    Map<String, String> result = {};
     var aiResponse = await GeminiService().getLangValues(param);
     Map decoded;
     try {
       decoded = jsonDecode(aiResponse);
     } catch (e) {
-       errorToast(tr("aiFailedToResponse"));
+      errorToast(tr("aiFailedToResponse"));
       return;
     }
-    decoded.forEach((key, value) {
-      result[key] = Map<String, String>.from(value);
+    decoded[langCode]?.forEach((key, value) {
+      if ((dataManager.data[langCode]?.containsKey(key)?? false) && 
+          dataManager.data[langCode]![key]!.isNotEmpty) {
+         result[key] = dataManager.data[langCode]?[key] ?? "";
+      }else{
+        result[key] = value;
+       
+      }
     });
 
-    dataManager.data[langCode] = result[langCode] ?? {};
+    dataManager.data[langCode] = result;
     // print(dataManager.data);
     notifyListeners();
   }
-
-
 }
